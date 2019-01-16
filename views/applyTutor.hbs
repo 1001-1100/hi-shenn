@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="../styles/navBarStyle.css">
+    <link rel="stylesheet" href="../styles/applyTutorStyle.css">
+
+    <link href="../tagit/css/jquery.tagit.css" rel="stylesheet" type="text/css">
+    <link href="../tagit/css/tagit.ui-zendesk.css" rel="stylesheet" type="text/css">
+
+
+    <script src="../otherJS/jquery-3.3.1.js"></script>
+    <script src="../otherJS/jquery.min.js"></script>
+    <script src="../otherJS/jquery-ui.min.js"></script>
+    <script src="../otherJS/jquery.form.min.js"></script>
+    <script src="../checkers/applyTutorChecker.js"></script>
+
+    <script src="../tagit/js/tag-it.js"></script>
+
+
+    <link rel="icon" href="<!-- insert pts small logo here -->">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <title>Apply as a Tutor</title>
+    <script>
+        $(document).ready(function () {
+            $("li.applyNav").addClass("active")
+        })
+    </script>
+</head>
+
+<body>
+    {{> navbar}}
+    <!--Start of Content-->
+    <h1 class="pageHeader">Tutor Application</h1>
+
+    <div class="contentContainer">
+
+        {{#if error}}
+
+        <div class="errorMessage"> {{error}} </div>
+
+        {{else}}
+
+        <form method="post" action="../tutor/applyTutorFinished" id="applyForm">
+
+            {{#if user}}
+
+            {{else}}
+            <!--<h2><u>PERSONAL </u></h2>-->
+
+            <div class="formItem">
+                <h2>Name <span class="requiredField"> * </span></h2>
+
+                <div style="display: flex;">
+                    <input class="textInput" type="text" placeholder="John Dela Cruz" name="name" />
+
+                    <div style="width: 15px;"></div>
+
+                    <div class="ui pointing label" id="nameErr">
+                        <i>Required Field</i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- maxlength attribute only works for type text-->
+            <div class="formItem">
+                <h2>ID Number <span class="requiredField"> * </span></h2>
+
+                <div style="display: flex;">
+                    <input type="number" class="textInput" placeholder="11512345" name="idNum" style="width:125px;"
+                        maxlength="8" />
+
+                    <div style="width: 15px;"></div>
+
+                    <div class="ui pointing label" id="idNumErr">
+                        <i>Required Field</i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- maxlength attribute only works for type text-->
+            <div class="formItem">
+                <h2>Mobile Number <span class="requiredField"> * </span></h2>
+
+                <div style="display: flex;">
+
+                    <input type="number" class="textInput" placeholder="09231234567" name="mobileNum" style="width:125px;"
+                        maxlength="11" />
+
+                    <div style="width: 15px;"></div>
+
+                    <div class="ui pointing label" id="mobileNumErr">
+                        <i>Required Field</i>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="formItem">
+                <h2>Email <span class="requiredField"> * </span></h2>
+
+                <div style="display: flex;">
+
+                    <input class="textInput" type="email" placeholder="john_delacruz@dlsu.edu.ph" name="email" />
+
+                    <div style="width: 15px;"></div>
+
+                    <div class="ui pointing label" id="emailErr">
+                        <i>Invalid Email</i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="formItem">
+                <!--<h2><u>ACADEMICS</u></h2>-->
+                <h2>Course <span class="requiredField"> * </span></h2>
+
+                <div style="display: flex;">
+
+                    <input class="textInput" type="text" placeholder="BS Computer Science" name="course" />
+
+                    <div style="width: 15px;"></div>
+
+                    <div class="ui pointing label" id="courseErr">
+                        <i>Required Field</i>
+                    </div>
+                </div>
+
+            </div>
+            {{/if}}
+
+
+            <!--START OF THE ITEMS SHOWN IN THE FORM FOR TUTEE LOGGED IN-->
+
+            <div class="formItem">
+                <h2>Number of Terms Left (including this term) <span class="requiredField"> * </span></h2>
+
+                <div style="display: flex;">
+                    <input type="number" class="textInput" style="width:62.5px;" placeholder="12" name="terms" />
+
+                    <div style="width: 15px;"></div>
+
+                    <div class="ui pointing label" id="termsErr">
+                        <i>Required Field</i>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="formItem">
+
+                <div style="display: flex;">
+                    <h2>Current Extracurricular Involvements <span class="requiredField"> * </span></h2>
+
+                    <div style="width: 15px;"></div>
+
+                    <div class="ui pointing label" id="extracurricularErr">
+                        <i>Required Field</i>
+                    </div>
+                </div>
+
+                <div class="notes">
+                    e.g. [LSCS] AVP Academics, [SPRINT] Executive Secretary
+                </div>
+                <!--<input class = "formInput" type="text" name="extracurricular" style="width:750px;" placeholder="e.g. [LSCS] AVP Academics, [SPRINT] Executive Secretary" required/>-->
+
+                <ul id="extracurricular_tags" class="tagit ui-widget ui-widget-content ui-corner-all"></ul>
+                <input class="formInput" id="extracurricular" hidden="hidden" name="extracurricular" value="" style="width:700px;" />
+
+            </div>
+
+            <div class="formItem">
+                <div style="display: flex;">
+                    <h2>Why do you wish to be a part of Peer Tutors Society? <span class="requiredField"> * </span></h2>
+
+                    <div style="width: 15px;"></div>
+
+                    <div class="ui pointing label" id="ptsQuestionErr">
+                        <i>Required Field</i>
+                    </div>
+                </div>
+
+                <textarea form="applyForm" name="ptsQuestion" style="margin-top: 5px;"></textarea>
+
+            </div>
+
+            <!--Start of Schedule Table-->
+
+
+            <div style="display: flex;">
+                <h2 class="scheduleTitle">HIGHLIGHT YOUR FREE TIME <span class="requiredField"> * </span></h2>
+
+                <div style="width: 15px;"></div>
+
+                <div class="ui pointing label" id="schedErr">
+                    <i>Required Field</i>
+                </div>
+            </div>
+
+            <div class="tableDiv">
+                <p class="tableDates colMO"> Mon</p> <!-- days -->
+                <p class="tableDates colTU" style="left:158px;">Tues</p>
+                <p class="tableDates colWE" style="left:151px;">Wed</p>
+                <p class="tableDates colTH" style="left:139px;">Thurs</p>
+                <p class="tableDates colFR" style="left:143px;">Fri</p>
+                <p class="tableDates colSA" style="left:131px;">Sat</p>
+
+                <p class="tableTime row0730">07:30 - 09:00 </p> <!-- first row -->
+                <div class="tableCell" data-id="MO0730"></div>
+                <div class="tableCell" data-id="TU0730"></div>
+                <div class="tableCell" data-id="WE0730"></div>
+                <div class="tableCell" data-id="TH0730"></div>
+                <div class="tableCell" data-id="FR0730"></div>
+                <div class="tableCell" data-id="SA0730"></div>
+
+                <p class="tableTime row0915">09:15 - 10:45 </p> <!-- second row -->
+                <div class="tableCell" data-id="MO0915"></div>
+                <div class="tableCell" data-id="TU0915"></div>
+                <div class="tableCell" data-id="WE0915"></div>
+                <div class="tableCell" data-id="TH0915"></div>
+                <div class="tableCell" data-id="FR0915"></div>
+                <div class="tableCell" data-id="SA0915"></div>
+
+                <p class="tableTime row1100">11:00 - 12:30</p> <!-- third row -->
+                <div class="tableCell" data-id="MO1100"></div>
+                <div class="tableCell" data-id="TU1100"></div>
+                <div class="tableCell" data-id="WE1100"></div>
+                <div class="tableCell" data-id="TH1100"></div>
+                <div class="tableCell" data-id="FR1100"></div>
+                <div class="tableCell" data-id="SA1100"></div>
+
+                <p class="tableTime row1245">12:45 - 14:15 </p> <!-- fourth row -->
+                <div class="tableCell" data-id="MO1245"></div>
+                <div class="tableCell" data-id="TU1245"></div>
+                <div class="tableCell" data-id="WE1245"></div>
+                <div class="tableCell" data-id="TH1245"></div>
+                <div class="tableCell" data-id="FR1245"></div>
+                <div class="tableCell" data-id="SA1245"></div>
+
+                <p class="tableTime row1430">14:30 - 16:00 </p> <!-- fifth row -->
+                <div class="tableCell" data-id="MO1430"></div>
+                <div class="tableCell" data-id="TU1430"></div>
+                <div class="tableCell" data-id="WE1430"></div>
+                <div class="tableCell" data-id="TH1430"></div>
+                <div class="tableCell" data-id="FR1430"></div>
+                <div class="tableCell" data-id="SA1430"></div>
+
+                <p class="tableTime row1615">16:15 - 17:45 </p> <!-- sixth row -->
+                <div class="tableCell" data-id="MO1615"></div>
+                <div class="tableCell" data-id="TU1615"></div>
+                <div class="tableCell" data-id="WE1615"></div>
+                <div class="tableCell" data-id="TH1615"></div>
+                <div class="tableCell" data-id="FR1615"></div>
+                <div class="tableCell" data-id="SA1615"></div>
+
+                <p class="tableTime row1800">18:00 - 19:30 </p> <!-- seventh row -->
+                <div class="tableCell" data-id="MO1800"></div>
+                <div class="tableCell" data-id="TU1800"></div>
+                <div class="tableCell" data-id="WE1800"></div>
+                <div class="tableCell" data-id="TH1800"></div>
+                <div class="tableCell" data-id="FR1800"></div>
+                <div class="tableCell" data-id="SA1800"></div>
+
+            </div>
+            <input type="hidden" id="schedule" name="schedule" value="{{user.freeTime}}">
+
+
+            <div class="formItem agree">
+                <input type="checkbox" name="agree" required />
+                <label>I hereby declare that all statements contained in this application are true and
+                    correct. I also understand that false or inaccurate information in the application will lead to my
+                    disqualification.</label>
+                <div class="ui pointing label" id="agreeErr">
+                        <i>Required Field</i>
+                </div>
+            </div>
+            <center><button class="BTN" id="submitButton">Submit</button></center>
+        </form>
+
+        {{/if}}
+    </div>
+
+
+    {{#if error}}
+
+    {{else}}
+    <footer>
+        <br>
+        <br>
+        <div style="display:flex; margin-bottom:10px; justify-content: center">
+            <a href="https://www.facebook.com/pts.dlsu/?ref=br_rs" target="_blank"><img src="../images/footer-facebook.png"/
+                    style="height:20px; width: 20px;"></a>
+            <span style="width:10px;"></span>
+            <a href="https://twitter.com/ptsdlsu" target="_blank"><img src="../images/footer-twitter.png"/ style="height:20px; width: 20px;"></a>
+        </div>
+    </footer>
+    {{/if}}
+
+    <!-- START OF MODAL -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p> Thank you for your interest in applying as a tutor! <br> You will be contacted through email or phone
+                for your interview schedule.</p>
+            <button class="BTN" id="submitButtonModal">Got it!</button>
+
+        </div>
+
+    </div>
+    <!-- END OF MODAL -->
+
+</body>
+
+</html>

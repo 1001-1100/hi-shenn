@@ -1,0 +1,39 @@
+<!----SLIDESHOW PARTIAL---->
+
+<div class="announcements">
+
+    <!--Start of slideshow-->
+    <h1 class="announcementTitle">Announcements</h1>
+
+    <div class="announcementSlideshow">
+
+        {{#if announcements}}
+            {{#each announcements}}
+            <div class="announcementImg fade" style="display:block">
+                <div class="card">
+                    <div class="card-title">
+                        {{this.announcementName}}
+                    </div>
+                    <div class="card-content">
+                        {{this.announcementInfo}}
+                    </div>
+                </div>
+                <img class="slide" src=../announcements/{{this.announcementLink}}> </div> 
+            {{/each}} 
+        {{else}} 
+            <div class="announcementImg fade" style="display:block">
+                    <img class="slide" src="../images/DefaultAnnouncement.jpg">
+                </div>
+        {{/if}}
+
+
+        <a class="prevBtn" onclick="slideMove(-1)">&#10094;</a> <!-- < symbol -->
+        <a class="nextBtn" onclick="slideMove(1)">&#10095;</a> <!-- > symbol -->
+
+        <div class="dotContainer">
+            <!--<span class="dot dactive" onclick="slideChoice(1)"></span>-->
+            <!--<span class="dot" onclick="slideChoice(2)"></span>-->
+            <!--<span class="dot" onclick="slideChoice(3)"></span>-->
+        </div>
+    </div>
+</div>

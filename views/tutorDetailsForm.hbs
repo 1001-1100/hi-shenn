@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="../semantic/semantic.css">
+    <link rel="stylesheet" href="../styles/navBarStyle.css">
+    <link rel="stylesheet" href="../styles/tutorDetailsFormStyle.css">
+
+    <link href="../tagit/css/jquery.tagit.css" rel="stylesheet" type="text/css">
+    <link href="../tagit/css/tagit.ui-zendesk.css" rel="stylesheet" type="text/css">
+
+
+    <script src="../otherJS/jquery-3.3.1.js"></script>
+    <script src="../otherJS/jquery.min.js"></script>
+    <script src="../otherJS/jquery-ui.min.js"></script>
+    <script src="../otherJS/jquery.form.min.js"></script>
+    <script src="../checkers/tutorDetailsFormChecker.js"></script>
+
+    <script src="../semantic/semantic.min.js"></script>
+    <script src="../tagit/js/tag-it.js"></script>
+
+
+    <link rel="icon" href="<!-- insert pts small logo here -->">
+    <title>Tutor Details</title>
+</head>
+
+<body>
+{{> navbar}}
+
+<!--Start of Content-->
+<h1 class="pageHeader">Tutor Details</h1>
+
+<div class="contentContainer">
+
+    {{#if error}}
+
+        <div class="errorMessage"> {{error}} </div>
+
+    {{else}}
+
+        <form method="post" action="../tutor/sendDetails" id="tutorDetails">
+
+            <div style="display: flex;">
+                <h2>Would you like to retain your membership?<span class="requiredField"> * </span></h2>
+
+                <div style="width: 15px;"></div>
+
+                <div  id="membershipErr">
+                    <i>Required Field</i>
+                </div>
+            </div>
+            <i>
+                <p class="description">Membership is valid if and only if you will tutor for atleast 1 term of the
+                    current Academic Year.</p>
+            </i>
+            <input type="radio" name="membership" value="Yes" onclick="if(this.checked){showtutorTerm()}"> Yes
+            <br>
+            <input type="radio" name="membership" value="No" onclick="if(this.checked){unshowtutorTerm()}"> No
+
+            <script>
+                function showtutorTerm() {
+                    $("div#tutorTerm").css("display", "block");
+                    $("input[name=tutorTerm]").prop('checked', false);
+                }
+
+                function unshowtutorTerm() {
+                    $("div#tutorTerm").css("display", "none");
+                    $("div#tutorPreferences").css("display", "none");
+                }
+            </script>
+
+            <!--if yes, show this-->
+            <div class="ui pointing label" id="tutorTerm">
+                <div style="display: flex;">
+                    <h2 class="exempt">Do you want to tutor this term?<span class="requiredField"> * </span></h2>
+
+                    <div style="width: 15px;"></div>
+
+                    <div  id="exemptErr">
+                        <i>Required Field</i>
+                    </div>
+                </div>
+                <input type="radio" name="tutorTerm" value="Yes" onclick="if(this.checked){showtutorPreferences()}"
+                       required> Yes
+                <br>
+                <input type="radio" name="tutorTerm" value="No" onclick="if(this.checked){unshowtutorPreferences()}">
+                No
+            </div>
+
+            <script>
+                function showtutorPreferences() {
+                    $("div#tutorPreferences").css("display", "block");
+                }
+
+                function unshowtutorPreferences() {
+
+                    $("div#tutorPreferences").css("display", "none");
+                }
+            </script>
+
+            <!--if yes, show this-->
+            <div id="tutorPreferences">
+                <div class="formDivider" style="margin-top:15px;"></div>
+
+                <center>
+                    <h2 style="color:#112136">TUTOR PREFERENCES</h2>
+                </center>
+
+                <div class="formDivider" style="margin-top:15px;"></div>
+
+                <div style="display: flex;">
+                    <h2>Types of Tutorials<span class="requiredField"> * </span></h2>
+
+                    <div style="width: 15px;"></div>
+
+                    <div  id="typeErr">
+                        <i>Required Field</i>
+                    </div>
+                </div>
+                <i>
+                    <p class="description">Which tutorial types are you comfortable with?</p>
+                </i>
+                <input type="checkbox" name="tutorialType" value="one"> One-on-one <br>
+                <input type="checkbox" name="tutorialType" value="small"> Small Group (2 - 3) <br>
+                <input type="checkbox" name="tutorialType" value="medium"> Large Group (4 - 9) <br>
+                <input type="checkbox" name="tutorialType" value="large"> Classroom (min 10) <br>
+
+                <h2>Maximum Tutee Count <span class="requiredField"> * </span></h2>
+                <i>
+                    <p class="description">Maximum amount of tutees you think you can handle per term.</p>
+                </i>
+
+                <div class="slidecontainer" style="margin-top: 10px; display: flex;">
+                    <input type="range" min="1" max="10" value="2" class="slider" id="myRange" name="tuteeCount">
+                    <span style="width: 10px;"></span>
+                    <i>
+                        <p class="description" style="color: maroon;">Count: <span id="demo"></span></p>
+                    </i>
+                </div>
+
+                <script>
+                    var slider = document.getElementById("myRange");
+                    var output = document.getElementById("demo");
+                    output.innerHTML = slider.value;
+
+                    slider.oninput = function () {
+                        output.innerHTML = this.value;
+                    }
+                </script>
+
+                <div style="display: flex;">
+                    <h2>Subjects <span class="requiredField"> * </span></h2>
+
+                    <div style="width: 15px;"></div>
+
+                    <div  id="subjectErr">
+                        <i>Required Field</i>
+                    </div>
+                </div>
+
+                <i><p class="description">List down all the subjects you'd want to teach. ex. COMPASM, GAMEDEV,
+                    WEBAPDE, COMALGO, etc.</p></i>
+                <div class="ui fluid multiple search selection dropdown required">
+                    <input type="hidden" name="subject">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">Select Subject</div>
+                    <div class="menu">
+                    </div>
+                </div>
+
+                <br>
+
+                <div class="formDivider" style="margin-top:15px;"></div>
+
+                <!--if yes, show this-->
+                <center>
+                    <h2 style="color:#112136">TUTOR SCHEDULE</h2>
+                </center>
+
+                <div class="formDivider" style="margin-top:15px;"></div>
+
+                <!--SCHEDULE CODE HERE-->
+                <div style="display: flex;">
+                    <h2 class="scheduleTitle">HIGHLIGHT YOUR FREE TIME <span class="requiredField"> * </span></h2>
+
+                    <div style="width: 15px;"></div>
+
+                    <div id="schedErr">
+                        <i>Required Field</i>
+                    </div>
+                </div>
+
+                <div class="tableDiv">
+                    <p class="tableDates colMO"> Mon</p> <!-- days -->
+                    <p class="tableDates colTU" style="left:158px;">Tues</p>
+                    <p class="tableDates colWE" style="left:151px;">Wed</p>
+                    <p class="tableDates colTH" style="left:139px;">Thurs</p>
+                    <p class="tableDates colFR" style="left:143px;">Fri</p>
+                    <p class="tableDates colSA" style="left:131px;">Sat</p>
+
+                    <p class="tableTime row0730">07:30 - 09:00 </p> <!-- first row -->
+                    <div class="tableCell" data-id="MO0730"></div>
+                    <div class="tableCell" data-id="TU0730"></div>
+                    <div class="tableCell" data-id="WE0730"></div>
+                    <div class="tableCell" data-id="TH0730"></div>
+                    <div class="tableCell" data-id="FR0730"></div>
+                    <div class="tableCell" data-id="SA0730"></div>
+
+                    <p class="tableTime row0915">09:15 - 10:45 </p> <!-- second row -->
+                    <div class="tableCell" data-id="MO0915"></div>
+                    <div class="tableCell" data-id="TU0915"></div>
+                    <div class="tableCell" data-id="WE0915"></div>
+                    <div class="tableCell" data-id="TH0915"></div>
+                    <div class="tableCell" data-id="FR0915"></div>
+                    <div class="tableCell" data-id="SA0915"></div>
+
+                    <p class="tableTime row1100">11:00 - 12:30</p> <!-- third row -->
+                    <div class="tableCell" data-id="MO1100"></div>
+                    <div class="tableCell" data-id="TU1100"></div>
+                    <div class="tableCell" data-id="WE1100"></div>
+                    <div class="tableCell" data-id="TH1100"></div>
+                    <div class="tableCell" data-id="FR1100"></div>
+                    <div class="tableCell" data-id="SA1100"></div>
+
+                    <p class="tableTime row1245">12:45 - 14:15 </p> <!-- fourth row -->
+                    <div class="tableCell" data-id="MO1245"></div>
+                    <div class="tableCell" data-id="TU1245"></div>
+                    <div class="tableCell" data-id="WE1245"></div>
+                    <div class="tableCell" data-id="TH1245"></div>
+                    <div class="tableCell" data-id="FR1245"></div>
+                    <div class="tableCell" data-id="SA1245"></div>
+
+                    <p class="tableTime row1430">14:30 - 16:00 </p> <!-- fifth row -->
+                    <div class="tableCell" data-id="MO1430"></div>
+                    <div class="tableCell" data-id="TU1430"></div>
+                    <div class="tableCell" data-id="WE1430"></div>
+                    <div class="tableCell" data-id="TH1430"></div>
+                    <div class="tableCell" data-id="FR1430"></div>
+                    <div class="tableCell" data-id="SA1430"></div>
+
+                    <p class="tableTime row1615">16:15 - 17:45 </p> <!-- sixth row -->
+                    <div class="tableCell" data-id="MO1615"></div>
+                    <div class="tableCell" data-id="TU1615"></div>
+                    <div class="tableCell" data-id="WE1615"></div>
+                    <div class="tableCell" data-id="TH1615"></div>
+                    <div class="tableCell" data-id="FR1615"></div>
+                    <div class="tableCell" data-id="SA1615"></div>
+
+                    <p class="tableTime row1800">18:00 - 19:30 </p> <!-- seventh row -->
+                    <div class="tableCell" data-id="MO1800"></div>
+                    <div class="tableCell" data-id="TU1800"></div>
+                    <div class="tableCell" data-id="WE1800"></div>
+                    <div class="tableCell" data-id="TH1800"></div>
+                    <div class="tableCell" data-id="FR1800"></div>
+                    <div class="tableCell" data-id="SA1800"></div>
+
+                </div>
+                <input type="hidden" id="schedule" name="schedule" value="{{user.freeTime}}">
+
+
+            </div>
+            <center>
+                <button class="BTN" id="submitButton">Submit</button>
+            </center>
+
+        </form>
+
+    {{/if}}
+</div>
+
+
+{{#if error}}
+
+{{else}}
+    <footer style="margin-top: 25px;">
+        <br>
+        <br>
+        <div style="display:flex; margin-bottom:10px; justify-content: center">
+            <a href="https://www.facebook.com/pts.dlsu/?ref=br_rs" target="_blank"><img src="../images/footer-facebook.png"/
+                style="height:20px; width: 20px;"></a>
+            <span style="width:10px;"></span>
+            <a href="https://twitter.com/ptsdlsu" target="_blank"><img src="../images/footer-twitter.png"/ style="height:20px; width: 20px;"></a>
+        </div>
+    </footer>
+{{/if}}
+
+<!-- START OF MODAL -->
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <!--<div class="modal-content">
+        <span class="close">&times;</span>
+        <p> Thank you for your interest in applying as a tutor! <br> You will be contacted through email or phone for your interview schedule.</p>
+          <button class="BTN" id="submitButtonModal">Got it!</button>
+
+      </div>-->
+
+</div>
+<!-- END OF MODAL -->
+
+</body>
+
+</html>

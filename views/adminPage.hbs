@@ -1,0 +1,1215 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../styles/navBarStyle.css">
+    <link rel="stylesheet" href="../styles/adminPageStyle.css">
+    <script src="../otherJS/jquery-3.3.1.js"> </script>
+    <script src="../checkers/adminPageChecker.js"> </script>
+    <link rel="icon" href="<!-- insert pts small logo here -->">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <title>Admin Page</title>
+    <script>
+        $(document).ready(function () {
+            $("li.adminNav").addClass("active")
+        })
+
+    </script>
+</head>
+
+<body>
+{{> navbar}}
+<nav>
+    <ul class="adminToolbar">
+        <li class="adminItem {{#if tuteeTool}}adminItemActive{{/if}}" data-id="tutees">Tutees</li>
+        <li class="adminItem {{#if tutorTool}}adminItemActive{{/if}}" data-id="tutors">Tutors</li>
+        <li class="adminItem {{#if requestTool}}adminItemActive{{/if}}" data-id="requests">Requests </li>
+        <li class="adminItem" data-id="applications">Applications</li>
+        <li class="adminItem {{#if evaluateTool}}adminItemActive{{/if}}" data-id="evaluations">Evaluations </li>
+        <li class="adminItem" data-id="feedbacks">Feedbacks </li>
+        <li class="adminItem {{#if announcementTool}}adminItemActive{{/if}}" data-id="announcements">Announcements</li>
+    </ul>
+</nav>
+
+
+<div class="content">
+    <div class="dataContainer">
+        <div class="tuteesContainer toolContainer" {{#unless tuteeTool}} style="display: none" {{/unless}}>
+            <div class="tableDiv">
+                <h1>Tutees</h1>
+
+                {{#if demoteTutorSuccess}}
+                    <div id="demoteTutorModal" style="display: block;" class="modal">
+
+                        <!-- Modal content -->
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <p> Successfully Demoted Tutor <b><u>{{email}}</u></b> to Tutee</p>
+
+                            <button class="BTN closeBtn"> Got it! </button>
+                        </div>
+
+                    </div>
+                {{/if}}
+
+                <table class="tuteeTable">
+                    <tr>
+                        <th>Name</th>
+                        <th>ID Number</th>
+                        <!--                                <th>Course</th>-->
+                        <th>Contact Number</th>
+                        <th>Active</th>
+                    </tr>
+                    {{#each tutee}}
+                        <tr class="tuteeRow">
+                            <td class="tuteeName">{{name}}</td>
+                            <td class="tuteeEmail" style="display:none">{{email}}</td>
+                            <td class="tuteeIdNum">{{idNum}}</td>
+                            <td class="tuteeContactNum">{{contactNum}}</td>
+                            <td class="tuteeActive">{{activeAccount}}</td>
+
+                            <td class="tuteeCourse" style="display:none !important;">{{course}}</td>
+                            <td class="tuteeSchedule" value="{{freeTime}}" style="display:none !important;">{{freeTime}}</td>
+                            <td class="tuteeSubjects" style="display:none !important;">{{subjects}}</td>
+                            <td class="tuteeCampus" style="display:none !important;">{{campus}}</td>
+                        </tr>
+                    {{else}}
+                        <tr>
+                            <td colspan="5">No tutees found</td>
+                        </tr>
+                    {{/each}}
+                </table>
+            </div>
+
+
+
+            <div class="specificDataContainer">
+
+                <div class="dataHider">
+                    <h3>No item selected</h3>
+                    <h4>Click on a table row to display information</h4>
+                </div>
+
+                <div class="specificData">
+
+                    {{#if user.superAdmin}}
+                        <div class="btnContainer">
+                            <form class="toggleActiveTuteeForm" id="toggleActiveTuteeForm" action="/admin/toggleActiveTutee"
+                                  method="post">
+
+                                <input class="toggleActiveBtnTutee BTN" type="submit" value="">
+
+                                <input class="specificTuteeEmail" type="hidden" name="specificTuteeEmail" value="">
+
+                                <input class="specificTuteeActive" type="hidden" name="specificTuteeActive" value="">
+
+                                {{#if tuteeTool}}
+                                    <input type="hidden" class="tuteeTool" id="tuteeTool" value="{{tuteeTool}}">
+                                {{/if}}
+                            </form>
+
+                            <form class="promoteTuteeForm" id="promoteTuteeForm" action="/admin/promoteTutee" method="post">
+
+                                <input class="promoteTuteeBtn BTN" type="submit" value="Promote to Tutor">
+
+                                <input class="specificTuteeEmail" type="hidden" name="specificTuteeEmail" value="">
+
+                                {{#if tuteeTool}}
+                                    <input type="hidden" class="tuteeTool" id="tuteeTool" value="{{tuteeTool}}">
+                                {{/if}}
+                            </form>
+                        </div>
+                    {{/if}}
+
+                    <h1 class="specificTuteeName"></h1>
+                    <h3 class="specificTuteeIdNum"></h3>
+                    <table class="specificTable">
+                        <tr>
+                            <td class="infoName">Contact</td>
+                            <td class="specificCell specificTuteeContactNum"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Email</td>
+                            <td class="specificCell specificTuteeEmail"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Course</td>
+                            <td class="specificCell specificTuteeCourse"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Campus</td>
+                            <td class="specificCell specificTuteeCampus"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Subjects</td>
+                            <td class="specificCell specificTuteeSubjects"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Active</td>
+                            <td class="specificCell specificTuteeActive"></td>
+                        </tr>
+                    </table>
+
+                    <div class="schedule">
+                        <h2 class="scheduleTitle">Free time</h2>
+
+                        <div>
+                            <p class="tableDates">Mon</p> <!-- days -->
+                            <p class="tableDates">Tues</p>
+                            <p class="tableDates">Wed</p>
+                            <p class="tableDates">Thurs</p>
+                            <p class="tableDates">Fri</p>
+                            <p class="tableDates">Sat</p>
+
+                            <p class="tableTime">07:30 - 09:00 </p> <!-- first row -->
+                            <div class="tableCell" data-id="MO0730"></div>
+                            <div class="tableCell" data-id="TU0730"></div>
+                            <div class="tableCell" data-id="WE0730"></div>
+                            <div class="tableCell" data-id="TH0730"></div>
+                            <div class="tableCell" data-id="FR0730"></div>
+                            <div class="tableCell" data-id="SA0730"></div>
+
+                            <p class="tableTime">09:15 - 10:45 </p> <!-- second row -->
+                            <div class="tableCell" data-id="MO0915"></div>
+                            <div class="tableCell" data-id="TU0915"></div>
+                            <div class="tableCell" data-id="WE0915"></div>
+                            <div class="tableCell" data-id="TH0915"></div>
+                            <div class="tableCell" data-id="FR0915"></div>
+                            <div class="tableCell" data-id="SA0915"></div>
+
+                            <p class="tableTime">11:00 - 12:30</p> <!-- third row -->
+                            <div class="tableCell" data-id="MO1100"></div>
+                            <div class="tableCell" data-id="TU1100"></div>
+                            <div class="tableCell" data-id="WE1100"></div>
+                            <div class="tableCell" data-id="TH1100"></div>
+                            <div class="tableCell" data-id="FR1100"></div>
+                            <div class="tableCell" data-id="SA1100"></div>
+
+                            <p class="tableTime">12:45 - 14:15 </p> <!-- fourth row -->
+                            <div class="tableCell" data-id="MO1245"></div>
+                            <div class="tableCell" data-id="TU1245"></div>
+                            <div class="tableCell" data-id="WE1245"></div>
+                            <div class="tableCell" data-id="TH1245"></div>
+                            <div class="tableCell" data-id="FR1245"></div>
+                            <div class="tableCell" data-id="SA1245"></div>
+
+                            <p class="tableTime">14:30 - 16:00 </p> <!-- fifth row -->
+                            <div class="tableCell" data-id="MO1430"></div>
+                            <div class="tableCell" data-id="TU1430"></div>
+                            <div class="tableCell" data-id="WE1430"></div>
+                            <div class="tableCell" data-id="TH1430"></div>
+                            <div class="tableCell" data-id="FR1430"></div>
+                            <div class="tableCell" data-id="SA1430"></div>
+
+                            <p class="tableTime">16:15 - 17:45 </p> <!-- sixth row -->
+                            <div class="tableCell" data-id="MO1615"></div>
+                            <div class="tableCell" data-id="TU1615"></div>
+                            <div class="tableCell" data-id="WE1615"></div>
+                            <div class="tableCell" data-id="TH1615"></div>
+                            <div class="tableCell" data-id="FR1615"></div>
+                            <div class="tableCell" data-id="SA1615"></div>
+
+                            <p class="tableTime">18:00 - 19:30 </p> <!-- seventh row -->
+                            <div class="tableCell" data-id="MO1800"></div>
+                            <div class="tableCell" data-id="TU1800"></div>
+                            <div class="tableCell" data-id="WE1800"></div>
+                            <div class="tableCell" data-id="TH1800"></div>
+                            <div class="tableCell" data-id="FR1800"></div>
+                            <div class="tableCell" data-id="SA1800"></div>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tutorsContainer toolContainer" style="display: none">
+            <div class="tableDiv">
+                <h1>Tutors</h1>
+
+                {{#if promoteTuteeSuccess}}
+                    <div id="promoteTuteeModal" style="display: block;" class="modal">
+
+                        <!-- Modal content -->
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <p> Successfully Promoted Tutee <b><u>{{email}}</u></b> to Tutor</p>
+
+                            <button class="BTN closeBtn"> Got it! </button>
+                        </div>
+
+                    </div>
+                {{/if}}
+
+                {{#if promoteTutorSuccess}}
+                    <div id="promoteTutorModal" style="display: block;" class="modal">
+
+                        <!-- Modal content -->
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <p> Successfully Promoted Tutor <b><u>{{email}}</u></b> to Admin</p>
+
+                            <button class="BTN closeBtn"> Got it! </button>
+                        </div>
+
+                    </div>
+                {{/if}}
+
+                {{#if demoteAdminSuccess}}
+                    <div id="demoteAdminModal" style="display: block;" class="modal">
+
+                        <!-- Modal content -->
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <p> Successfully Demoted Admin <b><u>{{email}}</u></b> to Tutor</p>
+
+                            <button class="BTN closeBtn"> Got it! </button>
+                        </div>
+
+                    </div>
+                {{/if}}
+
+                <table class="tutorTable">
+                    <tr>
+                        <th>Name</th>
+                        <th>ID Number</th>
+                        <th>Tutor Type</th>
+                        <th>Active</th>
+                    </tr>
+                    {{#each tutor}}
+                        <tr class="tutorRow">
+                            <td class="tutorName">{{name}}</td>
+                            <td class="tutorIdNum">{{idNum}}</td>
+                            <td class="tutorType">{{tutorType}}</td>
+                            <td class="tutorActive">{{activeAccount}}</td>
+
+                            <td class="tutorEmail" style="display:none !important;">{{email}}</td>
+                            <td class="tutorContactNum" style="display:none !important;">{{contactNum}}</td>
+                            <td class="tutorCourse" style="display:none !important;">{{course}}</td>
+                            <td class="tutorCampus" style="display:none !important;">{{campus}}</td>
+                            <td class="tutorSubjects" style="display:none !important;">{{subjects}}</td>
+                            <td class="tutorExpiration" style="display:none !important;">{{membershipExpiration}}</td>
+                            <td class="tutorSchedule" style="display:none !important;">{{freeTime}}</td>
+                            <td class="tutorSuperAdmin" style="display:none !important;">{{superAdmin}}</td>
+                        </tr>
+                    {{else}}
+                        <tr>
+                            <td colspan="5">No tutors found</td>
+                        </tr>
+                    {{/each}}
+                </table>
+
+                <h3 style="float:left">Turn <u>Tutor Details Form</u> On/Off</h3>
+
+                {{#if user.termStart}}
+                    <label class="switch">
+                        <input type="checkbox" class="detailsToggle" checked>
+                        <span class="slider round"></span>
+                    </label>
+                {{else}}
+                    <label class="switch">
+                        <input type="checkbox" class="detailsToggle">
+                        <span class="slider round"></span>
+                    </label>
+                {{/if}}
+
+
+            </div>
+
+            <div class="specificDataContainer">
+                <div class="dataHider">
+                    <h3>No item selected</h3>
+                    <h4>Click on a table row to display information</h4>
+                </div>
+
+                <div class="specificData">
+                    <!--tutors-->
+                    {{#if user.superAdmin}}
+                        <div class="btnContainer">
+                            <form class="toggleActiveTutorForm" id="toggleActiveTutorForm" action="/admin/toggleActiveTutor"
+                                  method="post">
+
+                                <input class="toggleActiveBtnTutor BTN" type="submit" value="">
+
+                                <input class="specificTutorEmail" type="hidden" name="specificTutorEmail" value="">
+
+                                <input class="specificTutorActive" type="hidden" name="specificTutorActive" value="">
+
+                                {{#if tutorTool}}
+                                    <input type="hidden" class="tutorTool" id="announcementTool" value="{{tutorTool}}">
+                                {{/if}}
+                            </form>
+
+                            <form class="demoteTutorForm" id="demoteTutorForm" action="/admin/demoteTutor" method="post">
+                                <input class="demoteTutorButton BTN" type="submit" value="Demote to Tutee">
+                                <input class="specificTutorEmail" type="hidden" name="specificTutorEmail" value="">
+                                {{#if tutorTool}}
+                                    <input type="hidden" class="tutorTool" id="tutorTool" value="{{tutorTool}}">
+                                {{/if}}
+                            </form>
+
+                            <form class="demoteAdminForm" id="demoteAdminForm" action="/admin/demoteAdmin" method="post">
+                                <input class="demoteAdminButton BTN" type="submit" value="Demote To Tutor">
+                                <input class="specificTutorEmail" type="hidden" name="specificTutorEmail" value="">
+
+                                {{#if tutorTool}}
+                                    <input type="hidden" class="tutorTool" id="tutorTool" value="{{tutorTool}}">
+                                {{/if}}
+                            </form>
+
+                            <form class="promoteTutorForm" id="promoteTutorForm" action="/admin/promoteTutor" method="post">
+                                <input class="promoteButton BTN" type="submit" value="Promote to Admin">
+                                <input class="specificTutorEmail" type="hidden" name="specificTutorEmail" value="">
+                                {{#if tutorTool}}
+                                    <input type="hidden" class="tutorTool" id="tutorTool" value="{{tutorTool}}">
+                                {{/if}}
+                            </form>
+                        </div>
+                    {{/if}}
+
+                    <h1 class="specificTutorName"></h1>
+                    <h3 class="specificTutorIdNum"></h3>
+                    <table class="specificTable">
+                        <tr>
+                            <td class="infoName">Email</td>
+                            <td class="specificCell specificTutorEmail"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Contact</td>
+                            <td class="specificCell specificTutorContactNum"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Course</td>
+                            <td class="specificCell specificTutorCourse"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Campus</td>
+                            <td class="specificCell specificTutorCampus"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Subjects</td>
+                            <td class="specificCell specificTutorSubjects"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Tutee Capacity</td>
+                            <td class="specificCell specificTutorTuteeCapacity"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Tutor Type</td>
+                            <td class="specificCell specificTutorType"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Membership Expiration</td>
+                            <td class="specificCell specificTutorExpiration"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Active</td>
+                            <td class="specificCell specificTutorActive"></td>
+                        </tr>
+                    </table>
+
+                    <div class="schedule">
+                        <h2 class="scheduleTitle">Free time</h2>
+
+                        <div>
+                            <p class="tableDates">Mon</p> <!-- days -->
+                            <p class="tableDates">Tues</p>
+                            <p class="tableDates">Wed</p>
+                            <p class="tableDates">Thurs</p>
+                            <p class="tableDates">Fri</p>
+                            <p class="tableDates">Sat</p>
+
+                            <p class="tableTime">07:30 - 09:00 </p> <!-- first row -->
+                            <div class="tableCell" data-id="MO0730"></div>
+                            <div class="tableCell" data-id="TU0730"></div>
+                            <div class="tableCell" data-id="WE0730"></div>
+                            <div class="tableCell" data-id="TH0730"></div>
+                            <div class="tableCell" data-id="FR0730"></div>
+                            <div class="tableCell" data-id="SA0730"></div>
+
+                            <p class="tableTime">09:15 - 10:45 </p> <!-- second row -->
+                            <div class="tableCell" data-id="MO0915"></div>
+                            <div class="tableCell" data-id="TU0915"></div>
+                            <div class="tableCell" data-id="WE0915"></div>
+                            <div class="tableCell" data-id="TH0915"></div>
+                            <div class="tableCell" data-id="FR0915"></div>
+                            <div class="tableCell" data-id="SA0915"></div>
+
+                            <p class="tableTime">11:00 - 12:30</p> <!-- third row -->
+                            <div class="tableCell" data-id="MO1100"></div>
+                            <div class="tableCell" data-id="TU1100"></div>
+                            <div class="tableCell" data-id="WE1100"></div>
+                            <div class="tableCell" data-id="TH1100"></div>
+                            <div class="tableCell" data-id="FR1100"></div>
+                            <div class="tableCell" data-id="SA1100"></div>
+
+                            <p class="tableTime">12:45 - 14:15 </p> <!-- fourth row -->
+                            <div class="tableCell" data-id="MO1245"></div>
+                            <div class="tableCell" data-id="TU1245"></div>
+                            <div class="tableCell" data-id="WE1245"></div>
+                            <div class="tableCell" data-id="TH1245"></div>
+                            <div class="tableCell" data-id="FR1245"></div>
+                            <div class="tableCell" data-id="SA1245"></div>
+
+                            <p class="tableTime">14:30 - 16:00 </p> <!-- fifth row -->
+                            <div class="tableCell" data-id="MO1430"></div>
+                            <div class="tableCell" data-id="TU1430"></div>
+                            <div class="tableCell" data-id="WE1430"></div>
+                            <div class="tableCell" data-id="TH1430"></div>
+                            <div class="tableCell" data-id="FR1430"></div>
+                            <div class="tableCell" data-id="SA1430"></div>
+
+                            <p class="tableTime">16:15 - 17:45 </p> <!-- sixth row -->
+                            <div class="tableCell" data-id="MO1615"></div>
+                            <div class="tableCell" data-id="TU1615"></div>
+                            <div class="tableCell" data-id="WE1615"></div>
+                            <div class="tableCell" data-id="TH1615"></div>
+                            <div class="tableCell" data-id="FR1615"></div>
+                            <div class="tableCell" data-id="SA1615"></div>
+
+                            <p class="tableTime">18:00 - 19:30 </p> <!-- seventh row -->
+                            <div class="tableCell" data-id="MO1800"></div>
+                            <div class="tableCell" data-id="TU1800"></div>
+                            <div class="tableCell" data-id="WE1800"></div>
+                            <div class="tableCell" data-id="TH1800"></div>
+                            <div class="tableCell" data-id="FR1800"></div>
+                            <div class="tableCell" data-id="SA1800"></div>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="requestsContainer toolContainer" style="display: none">
+            <div class="tableDiv">
+                <h1>Requests</h1>
+                {{#if matchError}}
+                    <p class="matchError" style="color:red;">{{matchError}}</p>
+                {{/if}}
+
+                {{#if autoMatched}}
+                    <div id="autoMatchedModal" style="display: block;" class="modal">
+
+                        <!-- Modal content -->
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <p>Successfully Automated Match </p>
+
+                            <button class="BTN closeBtn"> Got it! </button>
+                        </div>
+
+                    </div>
+                {{/if}}
+
+                <table class="requestsTable">
+                    <tr>
+
+                        <!--<th>Request ID</th>-->
+                        <th>Tutee Name</th>
+                        <th>Tutor Name</th>
+                        <th>Campus</th>
+                        <th>Type</th>
+                        <!--                                <th>Date of Request</th>-->
+                        <th>Status</th>
+                    </tr>
+
+                    <input class="reqID" id="reqID" value="{{id}}" type="hidden">
+                    {{#each request}}
+
+                        <tr class="requestRow">
+                            <td class="requestID" style="display:none !important;">{{_id}}</td>
+                            <td class="requestTuteeName">{{tuteeName}}</td>
+                            {{#if (isEmpty tutorName)}}
+                                <td class="emptyCell"></td>
+                            {{else}}
+                                <td class="requestTutorName">{{tutorName}}</td>
+                            {{/if}}
+                            <td class="requestCampus">{{campus}}</td>
+                            <td class="requestType">{{type}}</td>
+                            <td class="requestStatus">{{status}}</td>
+
+
+                            <td class="requestDate" style="display:none !important;">{{dateSubmitted}}</td>
+                            <td class="requestSubjects" style="display:none !important;">{{subjects}}</td>
+                            <td class="requestPreferredTutorName" style="display:none !important;">{{preferredTutor}}</td>
+                            <td class="requestSchedule" style="display:none !important;">{{freeTime}}</td>
+                            <!--<td class="requestAcademicYear" style="display:none !important;">{{academicYear}}</td>-->
+                            <!--<td class="requestTerm" style="display:none !important;">{{term}}</td>-->
+                        </tr>
+                        <input class="manual" type="hidden" name="manual" value="{{_id}}">
+
+                    {{else}}
+                        <tr>
+                            <td colspan="5">No requests found</td>
+                        </tr>
+                    {{/each}}
+                </table>
+            </div>
+
+            <div class="specificDataContainer">
+                <div class="dataHider">
+                    <h3>No item selected</h3>
+                    <h4>Click on a table row to display information</h4>
+                </div>
+
+                <div class="specificData">
+
+                    {{#if user.admin}}
+                        {{#if requestTool}}
+                            <input type="hidden" class="requestTool" id="requestTool" value="{{requestTool}}">
+                        {{/if}}
+                    {{/if}}
+
+                    <!--requests-->
+                    {{#if user.superAdmin}}
+                        <div class="btnContainer">
+
+                            <form class="manualMatch" id="manualMatchForm" action="../admin/manualMatch" method="post">
+
+                                <input class="manualMatchBtn BTN" type="submit" value="Manual Match">
+                                <input class="specificTutorEmail" type="hidden" name="tutorEmail" value="">
+
+                                <input class="manualMatch" type="hidden" name="manualRequestID" value="">
+
+                                {{#if tuteeTool}}
+                                    <input type="hidden" class="tuteeTool" id="tuteeTool" value="{{tuteeTool}}">
+                                {{/if}}
+                            </form>
+
+                            <form class="autoMatch" id="autoMatchForm" action="/admin/autoMatch" method="post">
+
+                                <input class="automateMatchBtn BTN" type="submit" value="Automate Match">
+
+                                <input class="manualMatch" type="hidden" name="manualRequestID" value="">
+                                <input class="specificTutorEmail" type="hidden" name="tutorEmail" value="">
+
+
+                                {{#if tuteeTool}}
+                                    <input type="hidden" class="tuteeTool" id="tuteeTool" value="{{tuteeTool}}">
+                                {{/if}}
+                            </form>
+                        </div>
+                    {{/if}}
+
+                    <h1 class="specificRequestTuteeName"></h1>
+                    <h3>Tutor: <span class="specificRequestTutorName"></span></h3>
+                    <table class="specificTable">
+                        <tr>
+                            <td class="infoName">Preferred Tutor</td>
+                            <td class="specificCell specificRequestPreferredTutorName"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Subject/s</td>
+                            <td class="specificCell specificRequestSubject"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Campus</td>
+                            <td class="specificCell specificRequestCampus"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Type</td>
+                            <td class="specificCell specificRequestType"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Status</td>
+                            <td class="specificCell specificRequestStatus"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Date of Request</td>
+                            <td class="specificCell specificRequestDate"></td>
+                        </tr>
+                    </table>
+
+                    <div class="schedule">
+                        <h2 class="scheduleTitle">Free time</h2>
+
+                        <div>
+                            <p class="tableDates">Mon</p> <!-- days -->
+                            <p class="tableDates">Tues</p>
+                            <p class="tableDates">Wed</p>
+                            <p class="tableDates">Thurs</p>
+                            <p class="tableDates">Fri</p>
+                            <p class="tableDates">Sat</p>
+
+                            <p class="tableTime">07:30 - 09:00 </p> <!-- first row -->
+                            <div class="tableCell" data-id="MO0730"></div>
+                            <div class="tableCell" data-id="TU0730"></div>
+                            <div class="tableCell" data-id="WE0730"></div>
+                            <div class="tableCell" data-id="TH0730"></div>
+                            <div class="tableCell" data-id="FR0730"></div>
+                            <div class="tableCell" data-id="SA0730"></div>
+
+                            <p class="tableTime">09:15 - 10:45 </p> <!-- second row -->
+                            <div class="tableCell" data-id="MO0915"></div>
+                            <div class="tableCell" data-id="TU0915"></div>
+                            <div class="tableCell" data-id="WE0915"></div>
+                            <div class="tableCell" data-id="TH0915"></div>
+                            <div class="tableCell" data-id="FR0915"></div>
+                            <div class="tableCell" data-id="SA0915"></div>
+
+                            <p class="tableTime">11:00 - 12:30</p> <!-- third row -->
+                            <div class="tableCell" data-id="MO1100"></div>
+                            <div class="tableCell" data-id="TU1100"></div>
+                            <div class="tableCell" data-id="WE1100"></div>
+                            <div class="tableCell" data-id="TH1100"></div>
+                            <div class="tableCell" data-id="FR1100"></div>
+                            <div class="tableCell" data-id="SA1100"></div>
+
+                            <p class="tableTime">12:45 - 14:15 </p> <!-- fourth row -->
+                            <div class="tableCell" data-id="MO1245"></div>
+                            <div class="tableCell" data-id="TU1245"></div>
+                            <div class="tableCell" data-id="WE1245"></div>
+                            <div class="tableCell" data-id="TH1245"></div>
+                            <div class="tableCell" data-id="FR1245"></div>
+                            <div class="tableCell" data-id="SA1245"></div>
+
+                            <p class="tableTime">14:30 - 16:00 </p> <!-- fifth row -->
+                            <div class="tableCell" data-id="MO1430"></div>
+                            <div class="tableCell" data-id="TU1430"></div>
+                            <div class="tableCell" data-id="WE1430"></div>
+                            <div class="tableCell" data-id="TH1430"></div>
+                            <div class="tableCell" data-id="FR1430"></div>
+                            <div class="tableCell" data-id="SA1430"></div>
+
+                            <p class="tableTime">16:15 - 17:45 </p> <!-- sixth row -->
+                            <div class="tableCell" data-id="MO1615"></div>
+                            <div class="tableCell" data-id="TU1615"></div>
+                            <div class="tableCell" data-id="WE1615"></div>
+                            <div class="tableCell" data-id="TH1615"></div>
+                            <div class="tableCell" data-id="FR1615"></div>
+                            <div class="tableCell" data-id="SA1615"></div>
+
+                            <p class="tableTime">18:00 - 19:30 </p> <!-- seventh row -->
+                            <div class="tableCell" data-id="MO1800"></div>
+                            <div class="tableCell" data-id="TU1800"></div>
+                            <div class="tableCell" data-id="WE1800"></div>
+                            <div class="tableCell" data-id="TH1800"></div>
+                            <div class="tableCell" data-id="FR1800"></div>
+                            <div class="tableCell" data-id="SA1800"></div>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="applicationsContainer toolContainer" style="display: none">
+            <div class="tableDiv">
+                <h1>Tutor Applications</h1>
+
+                <table class="applicationsTable">
+                    <tr>
+                        <th>Name</th>
+                        <th>ID Number</th>
+                        <th style="display:none;">Status</th>
+                    </tr>
+                    {{#each tutorApp}}
+                        <tr class="tutorAppRow">
+                            <td class="tutorAppName">{{name}}</td>
+                            <td class="tutorAppIdNum">{{idNum}}</td>
+                            <td class="tutorAppStatus" style="display:none;">{{status}}</td>
+
+
+                            <td class="tutorAppEmail" style="display:none !important;">{{email}}</td>
+                            <td class="tutorAppCourse" style="display:none !important;">{{course}}</td>
+                            <td class="tutorAppTermsLeft" style="display:none !important;">{{termsLeft}}</td>
+                            <td class="tutorAppExtraCurricular" style="display:none !important;">{{extraCurricular}}</td>
+                            <td class="tutorAppShortAnswer" style="display:none !important;">{{shortAnswer}}</td>
+                            <td class="tutorAppSchedule" style="display:none !important;">{{freeTime}}</td>
+                            <td class="tutorAppDateSubmitted" style="display:none !important;">{{dateSubmitted}}</td>
+                        </tr>
+                    {{else}}
+                        <tr>
+                            <td colspan="3">No applications found</td>
+                        </tr>
+                    {{/each}}
+                </table>
+            </div>
+
+            <div class="specificDataContainer">
+                <div class="dataHider">
+                    <h3>No item selected</h3>
+                    <h4>Click on a table row to display information</h4>
+                </div>
+                <div class="specificData">
+
+
+                    <h1 class="specificTutorAppName"></h1>
+                    <h3 class="specificTutorAppIdNum"></h3>
+                    <table class="specificTable">
+                        <tr>
+                            <td class="infoName">Email</td>
+                            <td class="specificCell specificTutorAppEmail"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Contact</td>
+                            <td class="specificCell specificTutorAppContactNum"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Course</td>
+                            <td class="specificCell specificTutorAppCourse"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Terms Left</td>
+                            <td class="specificCell specificTutorAppTermsLeft"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Extracurriculars</td>
+                            <td class="specificCell specificTutorAppExtraCurricular"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Reason for application</td>
+                            <td class="specificCell specificTutorAppShortAnswer"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Status</td>
+                            <td class="specificCell specificTutorAppStatus"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Date of Application</td>
+                            <td class="specificCell specificTutorAppDateSubmitted"></td>
+                        </tr>
+                    </table>
+
+
+                    <div class="schedule">
+                        <h2 class="scheduleTitle">Free time</h2>
+
+                        <div>
+                            <p class="tableDates">Mon</p> <!-- days -->
+                            <p class="tableDates">Tues</p>
+                            <p class="tableDates">Wed</p>
+                            <p class="tableDates">Thurs</p>
+                            <p class="tableDates">Fri</p>
+                            <p class="tableDates">Sat</p>
+
+                            <p class="tableTime">07:30 - 09:00 </p> <!-- first row -->
+                            <div class="tableCell" data-id="MO0730"></div>
+                            <div class="tableCell" data-id="TU0730"></div>
+                            <div class="tableCell" data-id="WE0730"></div>
+                            <div class="tableCell" data-id="TH0730"></div>
+                            <div class="tableCell" data-id="FR0730"></div>
+                            <div class="tableCell" data-id="SA0730"></div>
+
+                            <p class="tableTime">09:15 - 10:45 </p> <!-- second row -->
+                            <div class="tableCell" data-id="MO0915"></div>
+                            <div class="tableCell" data-id="TU0915"></div>
+                            <div class="tableCell" data-id="WE0915"></div>
+                            <div class="tableCell" data-id="TH0915"></div>
+                            <div class="tableCell" data-id="FR0915"></div>
+                            <div class="tableCell" data-id="SA0915"></div>
+
+                            <p class="tableTime">11:00 - 12:30</p> <!-- third row -->
+                            <div class="tableCell" data-id="MO1100"></div>
+                            <div class="tableCell" data-id="TU1100"></div>
+                            <div class="tableCell" data-id="WE1100"></div>
+                            <div class="tableCell" data-id="TH1100"></div>
+                            <div class="tableCell" data-id="FR1100"></div>
+                            <div class="tableCell" data-id="SA1100"></div>
+
+                            <p class="tableTime">12:45 - 14:15 </p> <!-- fourth row -->
+                            <div class="tableCell" data-id="MO1245"></div>
+                            <div class="tableCell" data-id="TU1245"></div>
+                            <div class="tableCell" data-id="WE1245"></div>
+                            <div class="tableCell" data-id="TH1245"></div>
+                            <div class="tableCell" data-id="FR1245"></div>
+                            <div class="tableCell" data-id="SA1245"></div>
+
+                            <p class="tableTime">14:30 - 16:00 </p> <!-- fifth row -->
+                            <div class="tableCell" data-id="MO1430"></div>
+                            <div class="tableCell" data-id="TU1430"></div>
+                            <div class="tableCell" data-id="WE1430"></div>
+                            <div class="tableCell" data-id="TH1430"></div>
+                            <div class="tableCell" data-id="FR1430"></div>
+                            <div class="tableCell" data-id="SA1430"></div>
+
+                            <p class="tableTime">16:15 - 17:45 </p> <!-- sixth row -->
+                            <div class="tableCell" data-id="MO1615"></div>
+                            <div class="tableCell" data-id="TU1615"></div>
+                            <div class="tableCell" data-id="WE1615"></div>
+                            <div class="tableCell" data-id="TH1615"></div>
+                            <div class="tableCell" data-id="FR1615"></div>
+                            <div class="tableCell" data-id="SA1615"></div>
+
+                            <p class="tableTime">18:00 - 19:30 </p> <!-- seventh row -->
+                            <div class="tableCell" data-id="MO1800"></div>
+                            <div class="tableCell" data-id="TU1800"></div>
+                            <div class="tableCell" data-id="WE1800"></div>
+                            <div class="tableCell" data-id="TH1800"></div>
+                            <div class="tableCell" data-id="FR1800"></div>
+                            <div class="tableCell" data-id="SA1800"></div>
+                            <br />
+                        </div>
+                    </div>
+
+                    <!--&lt;!&ndash;tutorApp&ndash;&gt;-->
+                        <!--{{#if user.superAdmin}}-->
+                    <!--<div class="btnContainer">-->
+
+                    <!--<form class="promoteTuteeForm" id="promoteTuteeForm" action="/admin/promoteTutee" method="post">-->
+
+                    <!--<input class="promoteTuteeBtn BTN" type="submit" value="Promote to Tutor">-->
+
+                    <!--<input class="specificTutorAppEmail" type="hidden" name="specificTutorAppEmail" value="">-->
+
+                        <!--{{#if tuteeTool}}-->
+                        <!--<input type="hidden" class="tuteeTool" id="tuteeTool" value="{{tuteeTool}}">-->
+                            <!--{{/if}}-->
+                    <!--</form>-->
+                    <!--</div>-->
+                        <!--{{/if}}-->
+                </div>
+            </div>
+        </div>
+
+        <div class="evaluationsContainer toolContainer" style="display: none">
+            <div class="tableDiv">
+                <h1>Evaluations</h1>
+
+
+                <table class="evaluationsTable">
+                    <tr>
+                        <th>Tutor Name</th>
+                        <th>Tutee Name</th>
+                        <th>Average</th>
+                    </tr>
+                    {{#each evaluation}}
+                        <tr class="evaluationRow">
+                            <td class="evaluationTutorName">{{tutorName}}</td>
+                            <td class="evaluationTuteeName">{{tuteeName}}</td>
+                            <td class="evaluationAverage">{{average}}</td>
+
+                            <td class="evaluationComments" style="display:none !important;">{{comments}}</td>
+                            <td class="evaluationMessage" style="display:none !important;">{{message}}</td>
+                            <td class="evaluationFrequency" style="display:none !important;">{{frequency}}</td>
+                            <td class="evaluationPunctuality" style="display:none !important;">{{punctuality}}</td>
+                            <td class="evaluationPreparedness" style="display:none !important;">{{preparedness}}</td>
+                            <td class="evaluationExplanation" style="display:none !important;">{{explanation}}</td>
+                            <td class="evaluationExercises" style="display:none !important;">{{exercises}}</td>
+                            <td class="evaluationRelevance" style="display:none !important;">{{relevance}}</td>
+                            <td class="evaluationEnthusiasm" style="display:none !important;">{{enthusiasm}}</td>
+                            <td class="evaluationOpenness" style="display:none !important;">{{opennes}}</td>
+                            <td class="evaluationConfidence" style="display:none !important;">{{confidence}}</td>
+                            <td class="evaluationKnowledgable" style="display:none !important;">{{knowledgable}}</td>
+                            <td class="evaluationVoiceModulation" style="display:none !important;">{{voiceModulation}}</td>
+                            <td class="evaluationQuestionAnswer" style="display:none !important;">{{questionAnswer}}</td>
+                            <td class="evaluationEffectiveness" style="display:none !important;">{{effectiveness}}</td>
+                            <td class="evaluationEncouraging" style="display:none !important;">{{encouraging}}</td>
+                        </tr>
+                    {{else}}
+                        <tr>
+                            <td colspan="3">No evaluations found</td>
+                        </tr>
+                    {{/each}}
+                </table>
+
+                <h3 style="float:left">Turn <u>Evaluation Form</u> On/Off</h3>
+                {{#if user.termEnd}}
+                    <label class="switch">
+                        <input type="checkbox" class="evalToggle" checked>
+                        <span class="slider round"></span>
+                    </label>
+                {{else}}
+                    <label class="switch">
+                        <input type="checkbox" class="evalToggle">
+                        <span class="slider round"></span>
+                    </label>
+                {{/if}}
+
+            </div>
+            <div class="specificDataContainer">
+                <div class="dataHider">
+                    <h3>No item selected</h3>
+                    <h4>Click on a table row to display information</h4>
+                </div>
+                <div class="specificData">
+                    <h1 class="specificEvaluationTutorName"></h1>
+                    <h3>Evaluated by: <span class="specificEvaluationTuteeName"></span></h3>
+                    <table class="specificTable">
+                        <tr>
+                            <td class="infoName">Frequency</td>
+                            <td class="specificCell specificEvaluationFrequency"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Punctuality</td>
+                            <td class="specificCell specificEvaluationPunctuality"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Preparedness</td>
+                            <td class="specificCell specificEvaluationPreparedness"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Explanation</td>
+                            <td class="specificCell specificEvaluationExplanation"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Exercises</td>
+                            <td class="specificCell specificEvaluationExercises"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Relevance</td>
+                            <td class="specificCell specificEvaluationRelevance"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Enthusiasm</td>
+                            <td class="specificCell specificEvaluationEnthusiasm"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Openness</td>
+                            <td class="specificCell specificEvaluationOpenness"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Confidence</td>
+                            <td class="specificCell specificEvaluationConfidence"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Knowledgable</td>
+                            <td class="specificCell specificEvaluationKnowledgable"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">VoiceModulation</td>
+                            <td class="specificCell specificEvaluationVoiceModulation"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Question & Answer</td>
+                            <td class="specificCell specificEvaluationQuestionAnswer"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Effectiveness</td>
+                            <td class="specificCell specificEvaluationEffectiveness"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Encouraging</td>
+                            <td class="specificCell specificEvaluationEncouraging"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Average</td>
+                            <td class="specificCell specificEvaluationAverage"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Comments</td>
+                            <td class="specificCell specificEvaluationComments"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Message</td>
+                            <td class="specificCell specificEvaluationMessage"></td>
+                        </tr>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="feedbacksContainer toolContainer" style="display: none">
+            <div class="tableDiv">
+                <h1>Feedbacks</h1>
+
+                <table class="feedbacksTable">
+                    <tr>
+                        <th>Evaluator</th>
+                        <th>Topic of Concern</th>
+                        <th>Date Submitted</th>
+                    </tr>
+                    {{#each feedback}}
+                        <tr class="feedbackRow">
+                            <td class="feedbackEvaluator">{{submitter}}</td>
+                            <td class="feedbackEvaluatee">{{concernedTopic}}</td>
+                            <td class="feedbackDateSubmitted">{{dateSubmitted}}</td>
+
+
+                            <td class="feedbackComplaints" style="display:none !important;">{{complaints}}</td>
+                            <td class="feedbackSuggestions" style="display:none !important;">{{suggestions}}</td>
+                            <td class="feedbackOthers" style="display:none !important;">{{others}}</td>
+                        </tr>
+                    {{else}}
+                        <tr>
+                            <td colspan="3">No feedback found</td>
+                        </tr>
+                    {{/each}}
+                </table>
+            </div>
+
+            <div class="specificDataContainer">
+                <div class="dataHider">
+                    <h3>No item selected</h3>
+                    <h4>Click on a table row to display information</h4>
+                </div>
+                <div class="specificData">
+                    <h1 class="specificFeedbackEvaluator"></h1>
+                    <h3>Evaluator</h3>
+                    <table class="specificTable">
+                        <tr>
+                            <td class="infoName">Topic of Concern</td>
+                            <td class="specificCell specificFeedbackEvaluatee"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Date Submitted</td>
+                            <td class="specificCell specificFeedbackDateSubmitted"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Complaints</td>
+                            <td class="specificCell specificFeedbackComplaints"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Suggestions</td>
+                            <td class="specificCell specificFeedbackSuggestions"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Others</td>
+                            <td class="specificCell specificFeedbackOthers"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="announcementsContainer toolContainer" style="display: none">
+            <div class="tableDiv" style="width: 18%">
+                <h1>Announcements</h1>
+
+                <table class="announcementsTable">
+                    <tr>
+                        <th>Announcement Name</th>
+                    </tr>
+                    {{#each announcement}}
+                        <tr class="announcementRow">
+                            <td class="announcementName" data-info="{{announcementInfo}}" data-name="{{announcementName}}">{{announcementName}}</td>
+                            <td class="announcementLink" style="display:none !important;">{{announcementLink}}</td>
+                        </tr>
+                    {{else}}
+                        <tr>
+                            <td>No announcements found</td>
+                        </tr>
+                    {{/each}}
+                </table>
+            </div>
+
+            <div class="newAnnouncementDiv">
+                <div class="newAnnouncementContainer contentContainer">
+                    <div class="err">
+                        Kindly fill out all the fields and upload a valid file
+                    </div>
+
+                    <form class="newAnnouncementForm" id="addAnnouncementForm" action="/admin/addAnnouncement"
+                          method="post" enctype="multipart/form-data">
+                            <span>
+                                <h2>Announcement Name<span class="requiredField">*</span></h2>
+                                {{#if error}}
+                                    <p style="color:red;">Announcement with that name exists</p>
+                                {{/if}}
+                                <input class="newAnnouncementName" type="text" name="announcementName" maxlength="40"
+                                       required />
+                            </span><br /><br />
+                        <span>
+                                <h2>Announcement Info<span class="requiredField">*</span></h2>
+                                <textarea class="newAnnouncementInfo" name="announcementInfo" maxlength="200" required></textarea>
+                            </span><br /><br />
+                        <span>
+                                <h2>Announcement Image<span class="requiredField">*</span></h2>
+                                <h4 style="margin:0;">Image ratio must be 4:3</h4>
+                                <input class="newAnnouncementLink" type="file" accept="image/jpeg, image/png" name="announcementImg"
+                                       required />
+                            </span><br /><br />
+                        <center><input class="BTN addAnnouncementButton" type="submit" value="Upload"></center>
+                        {{#if announcementTool}}
+                            <input type="hidden" class="announcementTool" id="announcementTool" value="{{announcementTool}}">
+                        {{/if}}
+                    </form>
+                </div>
+            </div>
+            <div class="specificDataContainer">
+                <div class="dataHider">
+                    <h3>No item selected</h3>
+                    <h4>Click on a table row to display information</h4>
+                </div>
+
+                <div class="specificData">
+                    <center>
+                        <img class="specificAnnouncementImg" src=" ">
+                    </center>
+                    <form class="deleteAnnouncementForm" id="deleteAnnouncementForm" action="/admin/deleteAnnouncement"
+                          method="post">
+
+                        <input class="annInput newAnnouncementName specificAnnouncementName" type="text" name="specificAnnouncementName"
+                               maxlength="40" readonly />
+                        <textarea class="annInput newAnnouncementInfo specificAnnouncementInfo" name="specificAnnouncementInfo"
+                                  maxlength="200" readonly></textarea>
+
+                        <input class="deleteAnnouncementButton BTN" type="submit" value="Delete">
+                        <input class="editAnnouncementButton BTN" type="submit" value="Edit">
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--END CONTENT-->
+
+<!-- START OF MODAL -->
+
+<div id="genericModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p id="genericData"> Are you sure you want to delete this Announcement? </p>
+        <button id="genericReject" class="genericReject REJECT BTN" id="rejectButtonModal">No</button>
+        <button id="genericAccept" class="genericAccept ACCEPT BTN" id="acceptButtonModal">Yes</button>
+    </div>
+
+</div>
+
+<div id="deleteAnnouncementModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p> Are you sure you want to delete this Announcement? </p>
+        <button class="BTN" id="deleteButtonModal">Yes</button>
+    </div>
+
+</div>
+
+<div id="addAnnouncementModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p> Are you sure you want to add this announcement? </p>
+        <button class="BTN" id="addButtonModal">Yes</button>
+    </div>
+
+</div>
+
+<div id="turnOnModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p> Open Evaluations? </p>
+        <button class="BTN" id="evaluationOpenButtonModal">Yes</button>
+    </div>
+
+</div>
+
+<div id="turnOffModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p> Close Evaluations? </p>
+        <button class="BTN" id="evaluationCloseButtonModal">Yes</button>
+    </div>
+
+</div>
+<!-- END OF MODAL -->
+
+<footer>
+    <br>
+</footer>
+
+</body>
+
+</html>

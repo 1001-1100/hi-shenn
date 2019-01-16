@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="../styles/navBarStyle.css">
+    <link rel="stylesheet" href="../styles/homeStyle.css">
+    <link rel="stylesheet" href="../styles/animation.css">
+    <script src="../otherJS/jquery-3.3.1.js"></script>
+    <script src="../otherJS/jquery.min.js"></script>
+    <script src="../otherJS/jquery-ui.min.js"></script>
+    <link rel="icon" href="<!-- insert pts small logo here -->">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+          crossorigin="anonymous">
+
+    <title>Peer Tutors Society</title>
+</head>
+
+<body>
+{{> navbar}}
+
+<div class="parentWrapper">
+    <div class="section">
+        <div class="mainTitle">
+            <center>
+                <div class="animation-target">
+                    <img src="images/ptsLogoAnimation2.png">
+                </div>
+            </center>
+            <div class="jumbo">
+                <h1>Peer Tutors Society</h1>
+                <h2>Online Hub</h2>
+            </div>
+        </div>
+
+        <div class="FAQ">
+            <a href="../signUpPage">
+                <div class="circleFAQ animation-target-jelly"><span>Register for an account</span><i class="fas fa-user-circle fa-3x"></i></div>
+            </a>
+            <a href="/loginPage">
+                <div class="circleFAQ animation-target-jelly"><span>Login your account</span><i class="fas fa-door-open fa-2x"></i></div>
+            </a>
+            <a href="../prompt">
+                <div class="circleFAQ animation-target-jelly"><span>Request for a tutor</span><i class="fas fa-file-alt fa-2x"></i></div>
+            </a>
+        </div>
+
+    </div>
+    <div class="section">
+        <h3>About</h3>
+        <h1>PTS</h1>
+        <p>PTS is the premiere tutoring organization under the Vice Dean of the College of Computer Studies, DLSU.
+            We offer tutoring services that can range from one-on-one tutoring, group studies, and classroom
+            sessions.</p>
+    </div>
+    <div class="section">
+        <h1>Announcements</h1>
+        <div class="announcementSlideshow">
+            {{#if announcements}}
+                {{#each announcements}}
+                    <div class="announcementImg fade" style="display:block">
+                        <div class="card">
+                            <div class="card-title">
+                                {{this.announcementName}}
+                            </div>
+                            <div class="card-content">
+                                {{this.announcementInfo}}
+                            </div>
+                        </div>
+                        <img class="slide" src=../announcements/{{this.announcementLink}}> </div> 
+                {{/each}} 
+            {{else}} 
+                <div class="announcementImg fade" style="display:block">
+                    <img class="slide" src="../images/DefaultAnnouncement.jpg">
+                </div>
+            {{/if}}
+
+            <a class="prevBtn" onclick="slideMove(-1)">&#10094;</a> <!-- < symbol -->
+            <a class="nextBtn" onclick="slideMove(1)">&#10095;</a> <!-- > symbol -->
+
+            <div class="dotContainer">
+                <!--<span class="dot dactive" onclick="slideChoice(1)"></span>-->
+                <!--<span class="dot" onclick="slideChoice(2)"></span>-->
+                <!--<span class="dot" onclick="slideChoice(3)"></span>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+
+    var announce = document.getElementsByClassName("announcementImg");
+
+
+    for (var z = 1; z <= announce.length; z++) {
+        if (z === 1) {
+            $("div.dotContainer").append("<span class='dot dactive'>" + "</span>")
+        }
+        else {
+            $("div.dotContainer").append("<span class='dot' >" + "</span>")
+        }
+    }
+
+
+
+    var dots = document.getElementsByClassName("dot");
+    for (var i = 0; i < dots.length; i++) {
+        let x = i;
+        dots[i].onclick = function () {
+            slideChoice((x + 1));
+        };
+    }
+
+    var slideNum = 1;
+
+
+    function slideChoice(n) {
+        showSlide(slideNum = n);
+    }
+
+    function slideMove(n) {
+        showSlide(slideNum += n);
+    }
+
+    carousel();
+
+
+    function carousel() {
+        var i;
+        var x = document.getElementsByClassName("announcementImg");
+        var dots = document.getElementsByClassName("dot");
+
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+
+
+        if (slideNum > x.length) {
+            slideNum = 1
+        }
+
+        x[slideNum - 1].style.display = "block";
+
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" dactive", "");
+        }
+
+
+        dots[slideNum - 1].className += " dactive";
+
+        slideNum++;
+        setTimeout(carousel, 5000);
+    }
+
+    function showSlide(n) {
+        var i;
+        var slides = document.getElementsByClassName("announcementImg");
+        var dots = document.getElementsByClassName("dot");
+        if (n > slides.length)
+            slideNum = 1
+        if (n < 1)
+            slideNum = slides.length
+
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" dactive", "");
+        }
+
+        for (i = 0; i < dots.length; i++) {
+            console.log(dots[i])
+        }
+
+        slides[slideNum - 1].style.display = "block";
+        dots[slideNum - 1].className += " dactive";
+
+    }
+
+</script>
+
+</body>
+
+</html>

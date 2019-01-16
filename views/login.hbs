@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../styles/navBarStyle.css">
+    <link rel="stylesheet" href="../styles/loginStyle.css">
+    <link rel="icon" href="<!-- insert pts small logo here -->">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <title>Log In</title>
+</head>
+
+<body>
+    {{> navbar}}
+    <div class="contentContainer">
+        <center><img class = "ptsLogoLogin" src ="../images/ptslogo - copy.png"></center>
+        
+        
+        <form class = "loginForm" action="/login" method="post">
+
+            {{#if message}}
+            <center>  <div class="err" style="display:inline-block;"">{{message}}</div></center>
+            {{/if}}
+
+            <div class = "formDivField">
+                <h2>E-mail</h2>
+                
+                <center><input class = "textInput" type="text" name="email" placeholder="john_delacruz@dlsu.edu.ph" required/></center><br/>
+            </div>
+            
+            <div class = "formDivField">
+                <h2>Password</h2>
+                
+                <center><input class = "textInput" type="password" name="password" placeholder="●●●●●●●●" required/></center><br/>
+            </div>
+            
+            <center><input class="BTN" type="submit" value="Log In"></center>
+        </form>
+        
+        <span class="signUpSpan">
+            <p align=center>Don't have an account?
+                <a href="/signUpPage">Sign Up</a>
+            </p>
+        </span>
+    </div>
+    
+    <footer>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div style="display:flex; margin-bottom:10px; justify-content: center">
+            <a href="https://www.facebook.com/pts.dlsu/?ref=br_rs" target="_blank" ><img src="../images/footer-facebook.png"/ style="height:20px; width: 20px;"></a>
+            <span style="width:10px;"></span>
+            <a href="https://twitter.com/ptsdlsu" target="_blank" ><img src="../images/footer-twitter.png"/ style="height:20px; width: 20px;"></a>
+        </div>
+    </footer>
+</body>
+</html>

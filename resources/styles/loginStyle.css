@@ -1,0 +1,37 @@
+body{
+    padding: 0;
+    margin: 0;
+}
+
+/* login form */
+
+    /* login form container */
+    .contentContainer{
+        top: 100px;
+        margin: 0 auto;
+    }
+
+    .ptsLogoLogin{
+        height: 120px;
+        margin-top:10px;
+    }
+
+    .signUpSpan p{
+        color: #2d4b72;
+    }
+    
+    .signUpSpan a{
+        color: #3c6aa7;
+    }
+
+    .signUpLink:visited{
+        color:  #3c6aa7;
+    }
+
+h2{
+    margin-left:248px;
+    margin-top: 15px;
+}
+
+
+/*end of login form*/

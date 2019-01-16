@@ -1,0 +1,284 @@
+body{
+    padding: 0;
+    margin: 0;
+}
+
+.notes{
+    font-style: italic;
+    font-size: 13px;
+    /*margin-bottom: 5px;*/
+}
+
+/* tutor application form */
+/*application form items*/
+.scheduleTitle{
+    margin-bottom: 0px;
+}
+
+.formItem{
+    position: relative;
+    margin-bottom: 20px;
+}
+
+/*end of application form items*/
+
+/*start of schedule table*/
+.tableDiv{
+    position: relative;
+    width: 80%;
+    height: 310px;
+    left: 70px;
+    margin:0;
+    padding:0;
+    margin-bottom:20px;
+}
+
+.tableTime{
+    position: relative;
+    width: 130px;
+
+    padding: 0;
+    margin: 0;
+    top: 5px;
+    left: 40px;
+    font-size: 18px;
+
+    /*text-align:center;*/
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.tableDates{
+    position: relative;
+    width: 45px;
+    margin-right: 30px;
+    left: 167px;
+    float: left;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.tableCell{
+    position: relative;
+    width: 65px;
+    height: 40px;
+    top: -25px;
+    left: 150px;
+    margin: 0;
+    margin-bottom: -25px;
+    padding:0;
+    float: left;
+    background-color:white;
+    border: 1px solid #2d4b72;
+}
+
+.blueBg{
+    background-color: #3c6aa7;
+}
+/*end of schedule table*/
+
+/*start of bottom form*/
+input[type=checkbox] {
+    position: relative;
+    top: 4px;
+    left: 1px;
+    transform: scale(1.5);
+}
+
+/*end of bottom form*/
+
+/*remove up and down arrow from number inputs, */
+/*CHROME AND SAFARI*/
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button{
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/*MOZILLA*/
+input[type='number']{
+    -moz-appearance: textfield;
+}
+/*and of arrow removal for number input*/
+
+/* end of tutor application form */
+
+/* START OF MODAL */
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    /*width: 80%;  Could be more or less, depending on screen size */
+
+    font-family: "Roboto-Regular", sans-serif;
+    /*height: 180px;*/
+    width: 700px;
+    font-size: 16px;
+    color: #2d4b72;
+    text-align: center;
+
+    border-radius: 15px;
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+/* END OF MODAL */
+
+
+/* START OF CHECKER */
+#membershipErr{
+    display: none;
+    font-size: 15px;
+    margin-top: 21px;
+    color: maroon;
+}
+
+#exemptErr{
+    display: none;
+    font-size: 15px;
+    margin-top: 7px;
+    color: maroon;
+    font-weight: 100;
+}
+
+#typeErr{
+    display: none;
+    font-size: 15px;
+    margin-top: 20px;
+    color: maroon;
+    font-weight: 100;
+}
+
+#subjectErr{
+    display: none;
+    font-size: 15px;
+    margin-top: 20px;
+    color: maroon;
+}
+
+#schedErr{
+    display: none;
+    font-size: 15px;
+    margin-top: 18px;
+    color: maroon;
+}
+
+
+/* START OF TUTOR DETAILS FORM*/
+/* the linear scale form */
+.linearScale{
+    text-align: center;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+/* span to make a tab */
+.fillerSpan{
+    width: 10px;
+}
+
+/* makes radio button bigger */
+input[type=radio] {
+    border: 0px;
+    height: 20px;
+    width: 20px;
+}
+
+/* visible divider for the form questions */
+.formDivider{
+    width: 750px;
+    height: 1px;
+    background-color: #919191;
+}
+
+form#tutorDetails h2:not(.exempt){
+    margin-top: 15px;
+}
+
+.description{
+    margin: 0px;
+    font-size: 12px;
+}
+
+/* makes checkbox bigger */
+input[type=checkbox] {
+    border: 0px;
+    height: 15px;
+    width: 15px;
+}
+
+#tutorTerm{
+    margin-bottom: 15px;
+    display: none;
+}
+
+#tutorPreferences{
+    margin-bottom: 15px;
+    display: none;
+}
+
+/*SLIDER CSS*/
+.slidecontainer {
+    width: 100%; /* Width of the outside container */
+}
+
+/* The slider itself */
+.slider {
+    -webkit-appearance: none;
+    width: 325px;
+    height: 10px;
+    border-radius: 5px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #2d4b72;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #2d4b72;
+    cursor: pointer;
+}
+/*END OF SLIDER CSS*/

@@ -1,0 +1,75 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="../styles/navBarStyle.css">
+        <link rel="stylesheet" href="../styles/evalSummaryStyle.css">
+        <link rel="icon" href="<!-- insert pts small logo here -->">
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+   
+        <title>Tutor Evaluation Summary</title>
+    </head>
+        
+    <body>
+        {{#each evals}}
+        <div class="evaluation">
+            <br>
+            
+            <img class="ptsLogo" src="../images/ptslogo.png"/>
+            
+            <h2 style="color:#112136;">Tutor Evaluation Summary</h2>
+            
+            <br>
+            
+            <table align="center">
+                <tr>
+                    <td class="col1">Tutor</td>
+                    <td>{{tutorName}}</td>
+                </tr>
+                
+                <tr>
+                    <td class="col1">Evaluated by</td>
+                    <td>{{tuteeName}}</td>
+                </tr>
+                
+                <tr>
+                    <td class="col1">Subjects Tackled</td>
+                    <td>{{subjects}}</td>
+                </tr>
+                
+                <tr>
+                    <td class="col1">Areas for Improvement</td>                    
+                    <td>{{frequency}} {{punctuality}}</td>
+                </tr>
+                
+                <tr>
+                    <td class="col1">Areas for Excellence</td>
+                    <td>{{frequency}} {{punctuality}}</td>
+                </tr>
+                
+                <tr>
+                    <td class="col1">Remarks</td>
+                    <td>{{comments}}</td>
+                </tr>
+                
+                <tr>
+                    <td class="col1">Tutee's Message</td>
+                    <td>{{message}}</td>
+                </tr>
+            </table>
+                        
+            
+        </div>
+        {{/each}}
+
+        <br>
+        
+        <center>
+            <a href="../admin/backBtn">
+            <button class="BTN noprint">Back</button>
+            </a>
+            </center>
+        
+        <br>
+        <br>
+    </body>
+    
+</html>

@@ -1,0 +1,38 @@
+{
+  "name": "sofengg-southies",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tinsayshenn/SOFENGG-Southies.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tinsayshenn/SOFENGG-Southies/issues"
+  },
+  "homepage": "https://github.com/tinsayshenn/SOFENGG-Southies#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+    "crypto": "^1.0.1",
+    "ember": "^1.0.3",
+    "ember-composable-helpers": "^2.1.0",
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "handlebars-helper-equal": "^1.0.0",
+    "hbs": "^4.0.1",
+    "iconv-lite": "^0.4.24",
+    "mongoose": "^5.3.2",
+    "multer": "^1.4.1",
+    "nodemailer": "^4.7.0",
+    "path": "^0.12.7",
+    "raw-body": "^2.3.3",
+    "safer-buffer": "^2.1.2",
+    "semantic-ui-dropdown": "^2.3.2"
+  }
+}

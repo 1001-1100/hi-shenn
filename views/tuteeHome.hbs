@@ -1,0 +1,197 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../styles/navBarStyle.css">
+    <link rel="stylesheet" href="../styles/tuteeHomeStyle.css">
+
+    <script src="../otherJS/jquery-3.3.1.js"></script>
+    <script src="../otherJS/jquery.min.js"></script>
+    <script src="../otherJS/jquery-ui.min.js"></script>
+
+    <link rel="icon" href="<!-- insert pts small logo here -->">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <title>Peer Tutors Society</title>
+    <script>
+        $(document).ready(function () {
+            $("li.homeNav").addClass("active")
+        })
+    </script>
+</head>
+
+<body>
+    {{> navbar}}
+
+    <div class="content">
+        <div class="tutorData">
+
+            {{#if tutors}}
+            <div class="pendingTutees">
+                <h1>Tutors</h1>
+
+                <!--PENDING TUTEES LIST-->
+                <div class="pendingList">
+
+                    {{#each tutors}}
+                    <div class="pendingItem">
+                        <span class="photo">
+                            <img class="photo" src="../images/defaultIcon2.png" />
+                        </span>
+
+                        <span class="data">
+                            <div class="divideDiv"></div>
+                            <div class="pendingName"> {{this.tutorName}} </div>
+                            <div class="divideDiv"></div>
+                            <div class="pendingSched"> {{this.freeTime}} </div>
+                            <div class="divideDiv"></div>
+                            <div class="pendingSubject"> {{this.subjects}} </div>
+                        </span>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+            <br>
+            {{else}}
+            <div class="pendingTutees">
+                <h1>Tutors</h1>
+
+                <!--PENDING TUTEES LIST-->
+                <div class="pendingList">
+                    NO TUTORS YET
+                </div>
+            </div>
+            <br>
+            {{/if}}
+
+            <h1>Pending Requests</h1>
+            <div class="pendingTutees">
+                <div class="pendingList">
+                    {{#if requests}}
+                        {{#each requests}}
+                        <div class="pendingItem">
+                            <span class="photo">
+                                <img class="photo" src="../images/defaultIcon2.png" />
+                            </span>
+
+                            <span class="data">
+                                <div class="divideDiv"></div>
+                                <div class="pendingName"> {{this.preferredTutor}} </div>
+                                <div class="divideDiv"></div>
+                                <div class="pendingSched"> {{this.freeTime}} </div>
+                                <div class="divideDiv"></div>
+                                <div class="pendingSubject"> {{this.subjects}} </div>
+                            </span>
+                        </div>
+                        {{/each}}
+                    {{else}}
+                    NO TUTOR REQUESTS YET
+                    {{/if}}
+                </div>
+            </div>
+
+
+
+            {{#if user.termEnd}}
+                {{#if tutors}}
+                    <div class="evaluate" onclick="window.location.href='../tutee/evaluate'">Term End Evaluation</div>
+                {{/if}}
+            {{/if}}
+
+        </div>
+        {{> slideshow}}
+
+    </div>
+    <!--END CONTENT-->
+
+    <script>
+
+        var announce = document.getElementsByClassName("announcementImg");
+
+
+        for (var z = 1; z <= announce.length; z++) {
+            if (z === 1) {
+                $("div.dotContainer").append("<span class='dot dactive'>" + "</span>")
+            }
+            else {
+                $("div.dotContainer").append("<span class='dot' >" + "</span>")
+            }
+        }
+
+        var dots = document.getElementsByClassName("dot");
+        for (var i = 0; i < dots.length; i++) {
+            let x = i;
+            dots[i].onclick = function () {
+                slideChoice((x + 1));
+            };
+        }
+
+
+
+        var dots = document.getElementsByClassName("dot");
+        var slideNum = 1;
+
+        function slideChoice(n) {
+            showSlide(slideNum = n);
+        }
+
+        function slideMove(n) {
+            showSlide(slideNum += n);
+        }
+
+        function showSlide(n) {
+            var i;
+            var slides = document.getElementsByClassName("announcementImg");
+            // var dots = document.getElementsByClassName("dot");
+            if (n > slides.length)
+                slideNum = 1
+            if (n < 1)
+                slideNum = slides.length
+
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" dactive", "");
+            }
+
+            slides[slideNum - 1].style.display = "block";
+            dots[slideNum - 1].className += " dactive";
+        }
+
+        carousel();
+
+        function carousel() {
+            var i;
+            var x = document.getElementsByClassName("announcementImg");
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            slideNum++;
+            if (slideNum > x.length) {
+                slideNum = 1
+            }
+            x[slideNum - 1].style.display = "block";
+
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" dactive", "");
+            }
+
+            dots[slideNum - 1].className += " dactive";
+            setTimeout(carousel, 5000); // Change image every 2 seconds
+        }
+
+    </script>
+
+    <!--        <footer>
+            <br>
+            <br>
+            <div style="display:flex; margin-bottom:10px; justify-content: center">
+                <img src="../images/footer-facebook.png"/ style="height:20px; width: 20px;">
+                <span style="width:10px;"></span>
+                <img src="../images/footer-twitter.png"/ style="height:20px; width: 20px;">
+            </div>
+        </footer>-->
+
+</body>
+
+</html>

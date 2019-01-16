@@ -1,0 +1,467 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../semantic/semantic.css">
+    <link rel="stylesheet" href="../styles/navBarStyle.css">
+    <link rel="stylesheet" href="../styles/tutorHomeStyle.css">
+
+    <script src="../otherJS/jquery-3.3.1.js"></script>
+    <script src="../otherJS/jquery.min.js"></script>
+    <script src="../otherJS/jquery-ui.min.js"></script>
+    <script src="../checkers/tutorhome.js"></script>
+    <script src="../checkers/tutorDetailsFormChecker.js"></script>
+    <script src="../semantic/semantic.min.js"></script>
+    <link rel="icon" href="<!-- insert pts small logo here -->">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <title>Peer Tutors Society</title>
+    <script>
+        $(document).ready(function () {
+            $("li.homeNav").addClass("active")
+
+            $(".ui.dropdown").dropdown('get value');
+
+            {{#if user.newlyPromoted}}
+                $("div.modal#tutorDetailsModal").css("display", "block");
+            {{/if}}
+        })
+    </script>
+</head>
+
+<body>
+    {{> navbar}}
+
+    <div class="content">
+        <div class="tutorData">
+
+            {{#if user.superAdmin}}
+            {{else}}
+            {{#if waitingTutees}}
+            <div class="pendingTutees">
+                <h1>Pending Tutees</h1>
+
+                <!--PENDING TUTEES LIST-->
+                <div class="pendingList">
+                    <!--START ITEM-->
+
+                    {{#each waitingTutees}}
+                    <div class="pendingItem">
+                        <span class="photo">
+                            <img class="photo" src="../images/defaultIcon2.png" />
+                        </span>
+
+                        <span class="data">
+                            <div class="pendingName"><b>{{this.tuteeName}}</b></div>
+                            <div class="divideDiv"></div>
+                            <div class="pendingSched">{{this.freeTime}}</div>
+                            <div class="divideDiv"></div>
+                            <div class="pendingSubject"> {{this.subjects}}</div>
+                            <div class="divideDiv"></div>
+
+                            <!--<form method="post" id="acceptTutee" action="/tutor/acceptTutee">-->
+                            <input type="hidden" name="id" value="{{this._id}}">
+                            <button class="ACCEPT BTN" data-email="{{this.email}}" data-id="{{this._id}}">ACCEPT</button>
+                            <!--</form>-->
+
+                            <!--<form method="post" id="rejectTutee" action="/tutor/rejectTutee">-->
+                            <!--<input type="hidden" name="id" value="{{this._id}}">-->
+                            <button class="REJECT BTN" data-email="{{this.email}}" data-id="{{this._id}}">REJECT</button>
+                            <!--</form>-->
+
+
+
+                        </span>
+                    </div>
+                    <!--END ITEM-->
+                    {{/each}}
+                </div>
+            </div>
+            <br>
+            {{else}}
+            <div class="pendingTutees">
+                <h1>Pending Tutees</h1>
+                <div class="pendingList">
+                    NO PENDING TUTEES
+                </div>
+            </div>
+            <br>
+            {{/if}}
+
+
+
+            {{#if acceptedTutees}}
+            <!--CURRENT TUTEES LIST-->
+            <div class="currentTutees">
+                <h1>Current Tutees</h1>
+
+                <div class="currentList">
+
+                    {{#each acceptedTutees}}
+                    <!--START ITEM-->
+                    <div class="currentItem">
+                        <span class="photo">
+                            <img class="photo" src="../images/defaultIcon2.png" />
+                        </span>
+
+                        <span class="data">
+                            <div class="divideDiv"></div>
+                            <div class="currentName"><b>{{this.tuteeName}}</b></div>
+                            <div class="divideDiv"></div>
+                            <div class="pendingSched"> {{this.freeTime}}</div>
+                            <div class="divideDiv"></div>
+                            <div class="currentSubject"> {{this.subjects}} </div>
+                        </span>
+                    </div>
+                    <!--END ITEM-->
+                    {{/each}}
+                </div>
+            </div>
+            <br>
+            {{else}}
+            <div class="currentTutees">
+                <h1>Current Tutees</h1>
+                <div class="currentList">
+                    NO CURRENT TUTEES
+                </div>
+            </div>
+            <br>
+
+            {{/if}}
+
+            <!--SHOW THE NEXT PART LANG KAPAG MAY TUTORS YUNG TUTOR??-->
+
+            {{#if acceptedTutors}}
+            <!--CURRENT TUTOR LIST-->
+            <div class="currentTutors">
+                <h1>Tutors</h1>
+                <div class="currentList">
+
+                    {{#each acceptedTutors}}
+                    <!--START ITEM-->
+                    <div class="currentItem">
+                        <span class="photo">
+                            <img class="photo" src="../images/defaultIcon2.png" />
+                        </span>
+
+                        <span class="data">
+                            <div class="divideDiv"></div>
+                            <div class="currentName"><b>{{this.tutorName}}</b></div>
+                            <div class="divideDiv"></div>
+                            <div class="currentSched"> {{this.freeTime}} </div>
+                            <div class="divideDiv"></div>
+                            <div class="currentSubject"> {{this.subjects}} </div>
+                        </span>
+                    </div>
+                    <!--END ITEM-->
+
+                    {{/each}}
+
+
+
+                </div>
+            </div>
+            <br>
+            {{/if}}
+
+            {{#if user.termStart}}
+            <br>
+            <div class="details" onclick="window.location.href='../tutor/tutorDetails'">
+                Tutor Details Form
+            </div>
+            {{/if}}
+            {{/if}}
+
+        </div>
+
+        {{> slideshow}}
+
+
+    </div>
+    <!--END CONTENT-->
+
+    <script>
+
+        var announce = document.getElementsByClassName("announcementImg");
+
+
+        for (var z = 1; z <= announce.length; z++) {
+            if (z === 1) {
+                $("div.dotContainer").append("<span class='dot dactive'>" + "</span>")
+            }
+            else {
+                $("div.dotContainer").append("<span class='dot' >" + "</span>")
+            }
+        }
+
+        var dots = document.getElementsByClassName("dot");
+        for (var i = 0; i < dots.length; i++) {
+            let x = i;
+            dots[i].onclick = function () {
+                slideChoice((x + 1));
+            };
+        }
+
+        var dots = document.getElementsByClassName("dot");
+        var slideNum = 1;
+
+        function slideChoice(n) {
+            showSlide(slideNum = n);
+        }
+
+        function slideMove(n) {
+            showSlide(slideNum += n);
+        }
+
+        function showSlide(n) {
+            var i;
+            var slides = document.getElementsByClassName("announcementImg");
+            // var dots = document.getElementsByClassName("dot");
+            if (n > slides.length)
+                slideNum = 1
+            if (n < 1)
+                slideNum = slides.length
+
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" dactive", "");
+            }
+
+            slides[slideNum - 1].style.display = "block";
+            dots[slideNum - 1].className += " dactive";
+        }
+
+        carousel();
+
+        function carousel() {
+            var i;
+            var x = document.getElementsByClassName("announcementImg");
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            slideNum++;
+            if (slideNum > x.length) {
+                slideNum = 1
+            }
+            x[slideNum - 1].style.display = "block";
+
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" dactive", "");
+            }
+
+            dots[slideNum - 1].className += " dactive";
+            setTimeout(carousel, 5000); // Change image every 2 seconds
+        }
+
+    </script>
+
+    <footer>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <!--<div style="display:flex; margin-bottom:10px; justify-content: center">
+            <img src="../images/footer-facebook.png"/ style="height:20px; width: 20px;">
+            <span style="width:10px;"></span>
+            <img src="../images/footer-twitter.png"/ style="height:20px; width: 20px;">
+        </div>-->
+    </footer>
+
+    <!-- START OF MODAL -->
+    <div id="confirmAccept" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p> Are you sure you want to accept this tutee?</p>
+            <button class="BTN" id="acceptTutee">Yes</button>
+        </div>
+
+    </div>
+
+    <div id="confirmReject" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p> Are you sure you want to reject this tutee?</p>
+            <button class="BTN" id="rejectTutee">Yes</button>
+        </div>
+
+    </div>
+
+    <div id="tutorDetailsModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <h1>Tutor Details for New Tutors</h1>
+            <h4>
+                If you are seeing this, you have just been made a tutor (Congratulations!)<br />
+                Kindly fill up this form to continue using your account
+            </h4>
+            <form method="post" action="../tutor/sendDetails" id="tutorDetails">
+                <input type="hidden" name="tutorTerm" value="Yes" checked>
+                <input type="hidden" name="membership" value="Yes" checked>
+                <div class="" id="tutorPreferences">
+                    <div class="formDivider"></div>
+
+                    <center>
+                        <h2 style="color:#112136">TUTOR PREFERENCES</h2>
+
+                    </center>
+
+                    <div class="formDivider" style="margin-top:15px;"></div>
+
+                    <h2>Types of Tutorials<span class="requiredField"> * </span></h2>
+                    <i>
+                        <p class="description">Which tutorial types are you comfortable with?</p>
+                    </i>
+                    <input type="checkbox" name="tutorialType" value="one"> One-on-one
+                    <br>
+                    <input type="checkbox" name="tutorialType" value="small"> Small Group (2 - 3)
+                    <br>
+                    <input type="checkbox" name="tutorialType" value="medium"> Large Group (4 - 9)
+                    <br>
+                    <input type="checkbox" name="tutorialType" value="large"> Classroom (min 10)
+                    <br>
+
+                    <h2>Maximum Tutee Count <span class="requiredField"> * </span></h2>
+                    <i>
+                        <p class="description">Maximum amount of tutees you think you can handle per term.</p>
+                    </i>
+
+                    <div class="slidecontainer" style="margin-top: 10px; display: flex;">
+                        <input type="range" min="1" max="10" value="2" class="slider" id="myRange" name="tuteeCount">
+                        <span style="width: 10px;"></span>
+                        <i>
+                            <p class="description" style="color: maroon;">Count: <span id="demo"></span></p>
+                        </i>
+                    </div>
+
+                    <script>
+                        var slider = document.getElementById("myRange");
+                        var output = document.getElementById("demo");
+                        output.innerHTML = slider.value;
+
+                        slider.oninput = function () {
+                            output.innerHTML = this.value;
+                        }
+                    </script>
+
+                    <h2>Subjects<span class="requiredField"> * </span></h2>
+                    <i>
+                        <p class="description">List down all the subjects you'd want to teach. ex. COMPASM,
+                            GAMEDEV,
+                            WEBAPDE, COMALGO, etc.</p>
+                    </i>
+
+                    <div class="ui fluid multiple search selection dropdown required">
+                        <input type="hidden" name="subject">
+                        <i class="dropdown icon"></i>
+                        <div class="default text">Select Subject</div>
+                        <div class="menu">
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="formDivider"></div>
+
+                    <!--if yes, show this-->
+                    <center>
+                        <h2 style="color:#112136">TUTOR SCHEDULE</h2>
+                    </center>
+
+                    <div class="formDivider" style="margin-top:15px;"></div>
+
+                    <!--SCHEDULE CODE HERE-->
+                    <div>
+                        <h2 class="scheduleTitle">Highlight your free time<span class="requiredField"> * </span></h2>
+                        <div class="ui pointing label" id="schedErr">
+                            <i>Required Field</i>
+                        </div>
+                    </div>
+
+                    <div class="tableDiv">
+                        <p class="tableDates colMO"> Mon</p> <!-- days -->
+                        <p class="tableDates colTU" style="left:158px;">Tues</p>
+                        <p class="tableDates colWE" style="left:151px;">Wed</p>
+                        <p class="tableDates colTH" style="left:139px;">Thurs</p>
+                        <p class="tableDates colFR" style="left:143px;">Fri</p>
+                        <p class="tableDates colSA" style="left:131px;">Sat</p>
+
+                        <p class="tableTime row0730">07:30 - 09:00 </p> <!-- first row -->
+                        <div class="tableCell" data-id="MO0730"></div>
+                        <div class="tableCell" data-id="TU0730"></div>
+                        <div class="tableCell" data-id="WE0730"></div>
+                        <div class="tableCell" data-id="TH0730"></div>
+                        <div class="tableCell" data-id="FR0730"></div>
+                        <div class="tableCell" data-id="SA0730"></div>
+
+                        <p class="tableTime row0915">09:15 - 10:45 </p> <!-- second row -->
+                        <div class="tableCell" data-id="MO0915"></div>
+                        <div class="tableCell" data-id="TU0915"></div>
+                        <div class="tableCell" data-id="WE0915"></div>
+                        <div class="tableCell" data-id="TH0915"></div>
+                        <div class="tableCell" data-id="FR0915"></div>
+                        <div class="tableCell" data-id="SA0915"></div>
+
+                        <p class="tableTime row1100">11:00 - 12:30</p> <!-- third row -->
+                        <div class="tableCell" data-id="MO1100"></div>
+                        <div class="tableCell" data-id="TU1100"></div>
+                        <div class="tableCell" data-id="WE1100"></div>
+                        <div class="tableCell" data-id="TH1100"></div>
+                        <div class="tableCell" data-id="FR1100"></div>
+                        <div class="tableCell" data-id="SA1100"></div>
+
+                        <p class="tableTime row1245">12:45 - 14:15 </p> <!-- fourth row -->
+                        <div class="tableCell" data-id="MO1245"></div>
+                        <div class="tableCell" data-id="TU1245"></div>
+                        <div class="tableCell" data-id="WE1245"></div>
+                        <div class="tableCell" data-id="TH1245"></div>
+                        <div class="tableCell" data-id="FR1245"></div>
+                        <div class="tableCell" data-id="SA1245"></div>
+
+                        <p class="tableTime row1430">14:30 - 16:00 </p> <!-- fifth row -->
+                        <div class="tableCell" data-id="MO1430"></div>
+                        <div class="tableCell" data-id="TU1430"></div>
+                        <div class="tableCell" data-id="WE1430"></div>
+                        <div class="tableCell" data-id="TH1430"></div>
+                        <div class="tableCell" data-id="FR1430"></div>
+                        <div class="tableCell" data-id="SA1430"></div>
+
+                        <p class="tableTime row1615">16:15 - 17:45 </p> <!-- sixth row -->
+                        <div class="tableCell" data-id="MO1615"></div>
+                        <div class="tableCell" data-id="TU1615"></div>
+                        <div class="tableCell" data-id="WE1615"></div>
+                        <div class="tableCell" data-id="TH1615"></div>
+                        <div class="tableCell" data-id="FR1615"></div>
+                        <div class="tableCell" data-id="SA1615"></div>
+
+                        <p class="tableTime row1800">18:00 - 19:30 </p> <!-- seventh row -->
+                        <div class="tableCell" data-id="MO1800"></div>
+                        <div class="tableCell" data-id="TU1800"></div>
+                        <div class="tableCell" data-id="WE1800"></div>
+                        <div class="tableCell" data-id="TH1800"></div>
+                        <div class="tableCell" data-id="FR1800"></div>
+                        <div class="tableCell" data-id="SA1800"></div>
+
+                    </div>
+                    <input type="hidden" id="schedule" name="schedule" value="{{user.freeTime}}">
+
+
+                </div>
+                <center>
+                    <button class="BTN" id="submitButton">Submit</button>
+                </center>
+
+            </form>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

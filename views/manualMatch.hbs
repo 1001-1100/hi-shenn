@@ -1,0 +1,261 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../styles/navBarStyle.css">
+    <link rel="stylesheet" href="../styles/manualMatchStyle.css">
+    <script src="../otherJS/jquery-3.3.1.js"> </script>
+    <script src="../checkers/manualMatchChecker.js"> </script>
+    <link rel="icon" href="<!-- insert pts small logo here -->">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <title>Admin Page</title>
+    <script>
+        $(document).ready(function () {
+            $("li.adminNav").addClass("active")
+        })
+    </script>
+</head>
+
+<body>
+{{> navbar}}
+
+<div class="content">
+    <div class="dataContainer">
+
+        <!--<div class="applicationsContainer toolContainer">-->
+            <!--<div class="tableDiv">-->
+
+            <!--</div>-->
+        <!--</div>-->
+
+        <div class="tutorsContainer toolContainer">
+            <div class="tableDiv">
+
+                <h1>Requests</h1>
+
+                <table class="requestsTable">
+                    <tr>
+                        <th>Tutee Name</th>
+                        <th>Tutor Name</th>
+                        <th>Campus</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <!--                                <th>Date of Request</th>-->
+                        <th>Subjects</th>
+                        <th>Free Time</th>
+                        <th>Preferred Tutor</th>
+
+                    </tr>
+                        <tr class="requestRow">
+                            <td class="requestTuteeName">{{request.tuteeName}}</td>
+                            <td class="requestTutorName">{{trequest.tutorName}}</td>
+                            <td class="requestCampus">{{request.campus}}</td>
+                            <td class="requestType">{{request.type}}</td>
+                            <td class="requestStatus">{{request.status}}</td>
+
+                            {{#if request._id}}
+                                <input class="manual" type="hidden" name="manual" value="{{request._id}}">
+                            {{/if}}
+
+                            <td class="requestDate" style="display:none !important;">{{dateSubmitted}}</td>
+                            <td class="requestSubjects">{{request.subjects}}</td>
+                            <td class="requestSchedule" style="word-wrap: break-word;">{{request.freeTime}}</td>
+                            <td class="requestPreferredTutorName">{{request.preferredTutor}}</td>
+                            <!--<td class="requestAcademicYear" style="display:none !important;">{{academicYear}}</td>-->
+                            <!--<td class="requestTerm" style="display:none !important;">{{term}}</td>-->
+                        </tr>
+
+                </table>
+
+                <h1>Tutors</h1>
+
+                <table class="tutorTable">
+                    <tr>
+                        <th>Name</th>
+                        <!--<th>ID Number</th>-->
+                        <th>Tutee Capacity</th>
+                        <th>Tutees</th>
+                        <th>Type</th>
+                        <th>Subjects</th>
+                        <th>Free Time</th>
+                        <th>Active</th>
+                    </tr>
+                    {{#each tutor}}
+                        <tr class="tutorRow">
+                            <td class="tutorName">{{name}}</td>
+                            <td style="display:none;" class="tutorIdNum">{{idNum}}</td>
+                            <td class="tutorTuteeCapacity">{{tuteeCapacity}}</td>
+                            <td class="tutorTutees">{{tutees}}</td>
+                            <td class="tutorType">{{tutorType}}</td>
+                            <td class="tutorSubjects">{{subjects}}</td>
+                            <td style="word-wrap: break-word;" class="tutorSchedule">{{freeTime}}</td>
+                            <td class="tutorActive">{{activeAccount}}</td>
+
+
+
+                            <td class="tutorEmail" style="display:none !important;">{{email}}</td>
+                            <td class="tutorContactNum" style="display:none !important;">{{contactNum}}</td>
+                            <td class="tutorCourse" style="display:none !important;">{{course}}</td>
+                            <td class="tutorCampus" style="display:none !important;">{{campus}}</td>
+                            <td class="tutorExpiration" style="display:none !important;">{{membershipExpiration}}</td>
+                            <td class="tutorSuperAdmin" style="display:none !important;">{{superAdmin}}</td>
+                        </tr>
+                    {{else}}
+                        <tr>
+                            <td colspan="7">No tutors found</td>
+                        </tr>
+                    {{/each}}
+                </table>
+
+            </div>
+
+            <div class="specificDataContainer manual">
+                <div class="dataHider">
+                    <h3>No item selected</h3>
+                    <h4>Click on a table row to display information</h4>
+                </div>
+                <div class="specificData">
+                    <h1 class="specificTutorName"></h1>
+                    <h3 class="specificTutorIdNum"></h3>
+                    <table class="specificTable">
+                        <tr>
+                            <td class="infoName">Email</td>
+                            <td class="specificCell specificTutorEmail"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Contact</td>
+                            <td class="specificCell specificTutorContactNum"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Course</td>
+                            <td class="specificCell specificTutorCourse"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Campus</td>
+                            <td class="specificCell specificTutorCampus"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Subjects</td>
+                            <td class="specificCell specificTutorSubjects"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Tutee Capacity</td>
+                            <td class="specificCell specificTutorTuteeCapacity"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Tutor Type</td>
+                            <td class="specificCell specificTutorType"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Membership Expiration</td>
+                            <td class="specificCell specificTutorExpiration"></td>
+                        </tr>
+                        <tr>
+                            <td class="infoName">Active</td>
+                            <td class="specificCell specificTutorActive"></td>
+                        </tr>
+                    </table>
+
+                    <div class="schedule">
+                        <h2 class="scheduleTitle">Free time</h2>
+
+                        <div>
+                            <p class="tableDates">Mon</p> <!-- days -->
+                            <p class="tableDates">Tues</p>
+                            <p class="tableDates">Wed</p>
+                            <p class="tableDates">Thurs</p>
+                            <p class="tableDates">Fri</p>
+                            <p class="tableDates">Sat</p>
+
+                            <p class="tableTime">07:30 - 09:00 </p> <!-- first row -->
+                            <div class="tableCell" data-id="MO0730"></div>
+                            <div class="tableCell" data-id="TU0730"></div>
+                            <div class="tableCell" data-id="WE0730"></div>
+                            <div class="tableCell" data-id="TH0730"></div>
+                            <div class="tableCell" data-id="FR0730"></div>
+                            <div class="tableCell" data-id="SA0730"></div>
+
+                            <p class="tableTime">09:15 - 10:45 </p> <!-- second row -->
+                            <div class="tableCell" data-id="MO0915"></div>
+                            <div class="tableCell" data-id="TU0915"></div>
+                            <div class="tableCell" data-id="WE0915"></div>
+                            <div class="tableCell" data-id="TH0915"></div>
+                            <div class="tableCell" data-id="FR0915"></div>
+                            <div class="tableCell" data-id="SA0915"></div>
+
+                            <p class="tableTime">11:00 - 12:30</p> <!-- third row -->
+                            <div class="tableCell" data-id="MO1100"></div>
+                            <div class="tableCell" data-id="TU1100"></div>
+                            <div class="tableCell" data-id="WE1100"></div>
+                            <div class="tableCell" data-id="TH1100"></div>
+                            <div class="tableCell" data-id="FR1100"></div>
+                            <div class="tableCell" data-id="SA1100"></div>
+
+                            <p class="tableTime">12:45 - 14:15 </p> <!-- fourth row -->
+                            <div class="tableCell" data-id="MO1245"></div>
+                            <div class="tableCell" data-id="TU1245"></div>
+                            <div class="tableCell" data-id="WE1245"></div>
+                            <div class="tableCell" data-id="TH1245"></div>
+                            <div class="tableCell" data-id="FR1245"></div>
+                            <div class="tableCell" data-id="SA1245"></div>
+
+                            <p class="tableTime">14:30 - 16:00 </p> <!-- fifth row -->
+                            <div class="tableCell" data-id="MO1430"></div>
+                            <div class="tableCell" data-id="TU1430"></div>
+                            <div class="tableCell" data-id="WE1430"></div>
+                            <div class="tableCell" data-id="TH1430"></div>
+                            <div class="tableCell" data-id="FR1430"></div>
+                            <div class="tableCell" data-id="SA1430"></div>
+
+                            <p class="tableTime">16:15 - 17:45 </p> <!-- sixth row -->
+                            <div class="tableCell" data-id="MO1615"></div>
+                            <div class="tableCell" data-id="TU1615"></div>
+                            <div class="tableCell" data-id="WE1615"></div>
+                            <div class="tableCell" data-id="TH1615"></div>
+                            <div class="tableCell" data-id="FR1615"></div>
+                            <div class="tableCell" data-id="SA1615"></div>
+
+                            <p class="tableTime">18:00 - 19:30 </p> <!-- seventh row -->
+                            <div class="tableCell" data-id="MO1800"></div>
+                            <div class="tableCell" data-id="TU1800"></div>
+                            <div class="tableCell" data-id="WE1800"></div>
+                            <div class="tableCell" data-id="TH1800"></div>
+                            <div class="tableCell" data-id="FR1800"></div>
+                            <div class="tableCell" data-id="SA1800"></div>
+                            <br />
+                        </div>
+                    </div>
+                    {{#if user.admin}}
+                        <div class="btnContainer">
+
+                            <form class="manualMatchForm" id="manualMatchForm" action="/admin/manualMatchSuccess" method="post">
+
+                                <input class="requestID" type="hidden" name="requestID" value="">
+
+                                <input class="specificTutorEmail" type="hidden" name="tutorEmail" value="">
+
+                                <input class="manualMatchBtn BTN" type="submit" value="Match to Tutee Request">
+
+                                {{#if tuteeTool}}
+                                    <input type="hidden" class="tuteeTool" id="tuteeTool" value="{{tuteeTool}}">
+                                {{/if}}
+                            </form>
+
+
+                        </div>
+                    {{/if}}
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<footer>
+    <br>
+</footer>
+
+</body>
+
+</html>

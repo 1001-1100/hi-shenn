@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="../styles/navBarStyle.css">
+        <link rel="stylesheet" href="../styles/promptStyle.css">
+        <script src="../otherJS/jquery-3.3.1.js"></script>
+        <script src="../otherJS/jquery.min.js"></script>
+        <script src="../otherJS/jquery-ui.min.js"></script>
+        <link rel="icon" href="<!-- insert pts small logo here -->">
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <title>Peer Tutors Society</title>
+    </head>
+    
+    <body>
+        {{> navbar}}
+
+        <div class="contentContainer">
+            
+            <center><img class = "ptsLogoLogin" src ="../images/ptslogo.png"></center>
+
+            You need to be logged in to perform this action.
+
+            <br>
+            <br>
+
+            <div class="buttons">
+                <button class = "BTN" onclick="window.location.href='/loginPage'"> Log In </button>
+
+                <button class = "BTN" onclick="window.location.href='/signUpPage'"> Sign Up </button>
+            </div>
+            
+            <br>
+
+        </div>
+
+    </body>
+</html>

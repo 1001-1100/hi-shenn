@@ -1,0 +1,438 @@
+body{
+    margin: 0px;
+    font-family: "Roboto-Regular", sans-serif;
+
+}
+
+.content{
+    position: relative;
+    width: auto;
+    height: auto;
+    top: 90px;
+    margin-left: 50px;
+    margin-right: 50px;
+
+    display: flex;
+    justify-content:space-between;
+}
+
+h1{
+    /*font-size:45px;*/
+    margin: 0px;
+    margin-bottom: 10px;
+    color: #112136;
+}
+
+.pendingTutees, .currentTutees{
+    height: auto;
+    width:550px;
+}
+
+.pendingList, .currentList{
+    background-color: white;
+    border: 1px solid #c9c9c9;
+    border-radius: 5px;
+    padding: 25px;
+}
+
+.pendingSched{
+    width: 350px;
+    word-wrap: break-word;
+}
+
+.photo{
+    height: 100px;
+    width: 100px;
+    border-radius:50px;
+    margin-right: 15px;
+}
+
+.pendingItem, .currentItem{
+    display: flex;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.divideDiv{
+    height: 10px;
+    widows: auto;
+}
+
+/* announcement slides */
+/* img slides container */
+.announcementSlideshow{
+    width: 600px;
+    height: 450px;
+    position: fixed;
+    top: 137px;
+    overflow: hidden;
+    border-radius: 5px;
+    right: 35px;
+    box-shadow: 0px 0px 30px 1px rgba(0,0,0,0.3);
+}
+
+.announcementImg{
+    display: none;
+}
+
+.announcementImg img{
+    height: 100%;
+    width:100%;
+    vertical-align: middle;
+}
+
+/*buttons for moving to next slide*/
+.prevBtn, .nextBtn{
+    position: absolute;
+    top: 50%;
+    margin-top: -22px;
+    width: auto;
+    padding: 16px;
+    color: white;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    cursor: pointer;
+}
+
+.prevBtn:hover, .nextBtn:hover{
+    background-color: rgba(0,0,0,0.5);
+}
+
+.nextBtn{
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+/*end of buttons for moving to next slide*/
+
+/*dots for moving through slides*/
+.dotContainer{
+    margin-top: -25px;
+    align-items: center;
+    text-align: center;
+}
+
+.dot {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #d1d1d1;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+}
+
+.dactive, .dot:hover {
+    background-color: #f0f0f0;
+}
+/*end of dots for moving through slides*/
+
+.slide{ /* pictures for announcements */
+    height: 400px;
+    width: 500px;
+}
+
+/*fade effect*/
+.fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 1.5s;
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+    from {opacity: .4}
+    to {opacity: 1}
+}
+
+@keyframes fade {
+    from {opacity: .4}
+    to {opacity: 1}
+}
+/*end of fade effect*/
+
+/* IAN */
+.card{
+    position: absolute;
+    height:150px;
+    width:100%;;
+    bottom:0;
+    background: rgba(10, 10, 10, 0.5);
+    border-radius: 5px;
+    z-index: 10;
+    color:white;
+    border: none;
+    overflow: hidden;
+}
+
+.card-title{
+    background-color:#112136;
+    padding:10px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.card-content{
+    font-size: 15px;
+    padding:10px;
+}
+
+/* FOR THE TUTOR DETAILS CHOOCHOO */
+.notes{
+    font-style: italic;
+    font-size: 13px;
+    /*margin-bottom: 5px;*/
+}
+
+/* tutor application form */
+/*application form items*/
+.formItem{
+    position: relative;
+    margin-bottom: 20px;
+}
+
+/*end of application form items*/
+
+/*start of schedule table*/
+.tableDiv{
+    position: relative;
+    width: 80%;
+    height: 310px;
+    left: 70px;
+    margin:0;
+    padding:0;
+    margin-bottom:20px;
+}
+
+.tableTime{
+    position: relative;
+    width: 130px;
+
+    padding: 0;
+    margin: 0;
+    top: 5px;
+    left: 40px;
+    font-size: 18px;
+
+    /*text-align:center;*/
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.tableDates{
+    position: relative;
+    width: 45px;
+    margin-right: 30px;
+    left: 167px;
+    float: left;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.tableCell{
+    position: relative;
+    width: 65px;
+    height: 40px;
+    top: -25px;
+    left: 150px;
+    margin: 0;
+    margin-bottom: -25px;
+    padding:0;
+    float: left;
+    background-color:white;
+    border: 1px solid #2d4b72;
+}
+
+.blueBg{
+    background-color: #3c6aa7;
+}
+/*end of schedule table*/
+
+/*start of bottom form*/
+input[type=checkbox] {
+    position: relative;
+    top: 4px;
+    left: 1px;
+    transform: scale(1.5);
+}
+
+/*end of bottom form*/
+
+/*remove up and down arrow from number inputs, */
+/*CHROME AND SAFARI*/
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button{
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/*MOZILLA*/
+input[type='number']{
+    -moz-appearance: textfield;
+}
+/*and of arrow removal for number input*/
+
+/* end of tutor application form */
+
+/* START OF MODAL */
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+#tutorDetailsModal h1{
+    text-align: center;
+}
+
+#tutorDetailsModal h4{
+    text-align: center;
+    margin:0;
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    /*width: 80%;  Could be more or less, depending on screen size */
+
+    font-family: "Roboto-Regular", sans-serif;
+    /*height: 180px;*/
+    width: 700px;
+    font-size: 16px;
+    color: #2d4b72;
+    text-align: center;
+
+    border-radius: 15px;
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+/* END OF MODAL */
+
+
+/* START OF CHECKER */
+#extracurricularErr{
+    display: none;
+    font-size: 15px;
+    margin-top: 5px;
+    color: maroon;
+}
+
+#schedErr{
+    display: none;
+    font-size: 15px;
+    margin-top: 5px;
+    color: maroon;
+}
+
+
+/* START OF TUTOR DETAILS FORM*/
+/* the linear scale form */
+.linearScale{
+    text-align: center;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+/* span to make a tab */
+.fillerSpan{
+    width: 10px;
+}
+
+/* makes radio button bigger */
+input[type=radio] {
+    border: 0px;
+    height: 20px;
+    width: 20px;
+}
+
+/* visible divider for the form questions */
+.formDivider{
+    width: 750px;
+    height: 1px;
+    background-color: #919191;
+}
+
+#tutorDetailsModal h2{
+    margin-top: 15px;
+}
+
+.description{
+    margin: 0px;
+    font-size: 12px;
+}
+
+/* makes checkbox bigger */
+input[type=checkbox] {
+    border: 0px;
+    height: 15px;
+    width: 15px;
+}
+
+/*SLIDER CSS*/
+.slidecontainer {
+    width: 100%; /* Width of the outside container */
+}
+
+/* The slider itself */
+.slider {
+    -webkit-appearance: none;
+    width: 325px;
+    height: 10px;
+    border-radius: 5px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #2d4b72;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #2d4b72;
+    cursor: pointer;
+}
+/*END OF SLIDER CSS*/
+
+/* NAV BAR FIXES */
+.userWelcome{
+    padding-top: 14px;
+}
+/* END OF NAV BAR */

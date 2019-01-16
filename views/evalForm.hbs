@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="../styles/navBarStyle.css">
+    <link rel="stylesheet" href="../styles/evalFormStyle.css">
+    <link rel="icon" href="<!-- insert pts small logo here -->">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+    <title>Evaluate a Tutor</title>
+
+    <script src="../otherJS/jquery-3.3.1.js"></script>
+    <script src="../otherJS/jquery-ui.min.js"></script>
+    <script src="../otherJS/jquery.form.min.js"></script>
+
+
+    <script src="../semantic/semantic.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+
+            // $("#backButton").click(function(){
+            //
+            // })
+
+            $(".ui.dropdown").dropdown('get value');
+
+            // $('.ui.dropdown').dropdown('get value');
+      
+            $.ajax({
+                type: "POST",
+                url: "../tutor/getTutorsAJAX",
+                data: {
+
+                },
+                success: function (res) {
+                    let tutors = res.tutors
+                    console.log("TUTORS: " +tutors)
+                    for (let i = 0; i < tutors.length; i++) {
+                        var item = document.createElement("option")
+                        $(item).attr("value", tutors[i].name)
+                        $(item).text(tutors[i].name)
+                        $("select.tutorSelect").append(item)
+                    }
+                }
+            });
+
+        });
+
+    </script>
+</head>
+
+<body>
+    <!--Top Nav Bar-->
+    {{> navbar }}
+
+    <!--Start of Content-->
+    <h1 class=pageHeader>Tutor Evaluation</h1>
+
+    <div class=contentContainer>
+
+        <form autocomplete="off" action="../tutee/evaluateTutor" method="post" id="evalForm">
+
+            <!-- START OF ORIGINAL EVAL1 -->
+
+            <!--<h2>Name</h2>-->
+            <!--<input class="textInput" type="text" name="name" placeholder="John Dela Cruz" style="width:250px;" required>-->
+
+            <!--<h2>ID Number</h2>-->
+            <!--<input class="textInput" type="text" name="ID_number" placeholder="11512345" style="width:125px;" required>-->
+            <!--&lt;!&ndash;<select name="ID_number" required>-->
+            <!--<option value="113">113</option>-->
+            <!--<option value="114">114</option>-->
+            <!--<option value="115">115</option>-->
+            <!--<option value="116">116</option>-->
+            <!--<option value="117">117</option>-->
+            <!--<option value="118">118</option>-->
+            <!--</select>&ndash;&gt;-->
+
+            <!--<h2>Course</h2>-->
+            <!--<select name="course" required>-->
+            <!--<option value="BS CS">BS Computer Science</option>-->
+            <!--<option value="BS CS-ST">BS Computer Science with specialization in Software Technology</option>-->
+            <!--<option value="BS CS-NE">BS Computer Science with specialization in Network Engineering</option>-->
+            <!--<option value="BS IT">BS Information Technology</option>-->
+            <!--<option value="BS IS">BS Information Systems</option>-->
+            <!--</select>-->
+
+            <h2>Tutor <span class="requiredField"> * </span></h2>
+            <select name="tutor" class="tutorSelect" required>
+
+            </select>
+
+            <!--<h2>Subject Tackled</h2>-->
+            <!--<select name="subject" required>-->
+            <!--<option value="DISCTRU">DISCTRU</option>-->
+            <!--<option value="COMPRO1">COMPRO1</option>-->
+            <!--<option value="BASICON">BASICON</option>-->
+            <!--<option value="CCSALGE">CCSALGE</option>-->
+            <!--</select>-->
+
+            <h2>Where did you hear of PTS? <span class="requiredField"> * </span></h2>
+            <select name="hearPTS" required>
+                <option value="FB Post">Facebook Page / Post</option>
+                <option value="Upperclassmen">Upperclassmen</option>
+                <option value="LSCS">La Salle Computer Society</option>
+                <option value="Bulletin Board">Bulletin Board</option>
+            </select>
+            <br>
+            <br>
+
+            <div class="formDivider"></div>
+
+            <!-- START OF ORIGINAL EVAL2 -->
+
+            <h2>Frequency <span class="requiredField"> * </span></h2>
+            Were you able to meet during the specified scheduled times?
+            <br>
+            <br>
+
+            <div class="linearScale">
+                Never
+                <span class="fillerSpan"> </span>
+                <span> 1 <br> <input type="radio" name="frequency" value="1" required></span>
+                <span> 2 <br> <input type="radio" name="frequency" value="2"></span>
+                <span> 3 <br> <input type="radio" name="frequency" value="3"></span>
+                <span> 4 <br> <input type="radio" name="frequency" value="4"></span>
+                <span> 5 <br> <input type="radio" name="frequency" value="5"></span>
+                <span> 6 <br> <input type="radio" name="frequency" value="6"></span>
+                <span> 7 <br> <input type="radio" name="frequency" value="7"></span>
+                <span> 8 <br> <input type="radio" name="frequency" value="8"></span>
+                <span> 9 <br> <input type="radio" name="frequency" value="9"></span>
+                <span> 10 <br> <input type="radio" name="frequency" value="10"></span>
+                <span class="fillerSpan"> </span>
+                Always
+            </div>
+
+            <br>
+            <div class="formDivider"></div>
+
+            <h2>Punctuality <span class="requiredField"> * </span></h2>
+            Was your tutor present and on time during your scheduled sessions?
+            <br>
+            <br>
+
+            <div class="linearScale">
+                Never
+                <span class="fillerSpan"> </span>
+                <span> 1 <br> <input type="radio" name="punctuality" value="1" required></span>
+                <span> 2 <br> <input type="radio" name="punctuality" value="2"></span>
+                <span> 3 <br> <input type="radio" name="punctuality" value="3"></span>
+                <span> 4 <br> <input type="radio" name="punctuality" value="4"></span>
+                <span> 5 <br> <input type="radio" name="punctuality" value="5"></span>
+                <span> 6 <br> <input type="radio" name="punctuality" value="6"></span>
+                <span> 7 <br> <input type="radio" name="punctuality" value="7"></span>
+                <span> 8 <br> <input type="radio" name="punctuality" value="8"></span>
+                <span> 9 <br> <input type="radio" name="punctuality" value="9"></span>
+                <span> 10 <br> <input type="radio" name="punctuality" value="10"></span>
+                <span class="fillerSpan"> </span>
+                Always
+            </div>
+
+            <br>
+            <div class="formDivider"></div>
+
+            <h2>Preparedness <span class="requiredField"> * </span></h2>
+            How prepared was your tutor during sessions?
+            <br>
+            <br>
+
+            <div class="linearScale">
+                Never
+                <span class="fillerSpan"> </span>
+                <span> 1 <br> <input type="radio" name="preparedness" value="1" required></span>
+                <span> 2 <br> <input type="radio" name="preparedness" value="2"></span>
+                <span> 3 <br> <input type="radio" name="preparedness" value="3"></span>
+                <span> 4 <br> <input type="radio" name="preparedness" value="4"></span>
+                <span> 5 <br> <input type="radio" name="preparedness" value="5"></span>
+                <span> 6 <br> <input type="radio" name="preparedness" value="6"></span>
+                <span> 7 <br> <input type="radio" name="preparedness" value="7"></span>
+                <span> 8 <br> <input type="radio" name="preparedness" value="8"></span>
+                <span> 9 <br> <input type="radio" name="preparedness" value="9"></span>
+                <span> 10 <br> <input type="radio" name="preparedness" value="10"></span>
+                <span class="fillerSpan"> </span>
+                Always
+            </div>
+
+            <br>
+            <div class="formDivider"></div>
+
+            <h2>Explanation <span class="requiredField"> * </span></h2>
+            Does your tutor explain clearly and can easily be understood?
+            <br>
+            <br>
+
+            <div class="linearScale">
+                Never
+                <span class="fillerSpan"> </span>
+                <span> 1 <br> <input type="radio" name="explanation" value="1" required></span>
+                <span> 2 <br> <input type="radio" name="explanation" value="2"></span>
+                <span> 3 <br> <input type="radio" name="explanation" value="3"></span>
+                <span> 4 <br> <input type="radio" name="explanation" value="4"></span>
+                <span> 5 <br> <input type="radio" name="explanation" value="5"></span>
+                <span> 6 <br> <input type="radio" name="explanation" value="6"></span>
+                <span> 7 <br> <input type="radio" name="explanation" value="7"></span>
+                <span> 8 <br> <input type="radio" name="explanation" value="8"></span>
+                <span> 9 <br> <input type="radio" name="explanation" value="9"></span>
+                <span> 10 <br> <input type="radio" name="explanation" value="10"></span>
+                <span class="fillerSpan"> </span>
+                Always
+            </div>
+
+            <br>
+            <div class="formDivider"></div>
+
+            <h2>Exercises <span class="requiredField"> * </span></h2>
+            Does your tutor make use of different materials or exercises for your learing?
+            <br>
+            <br>
+
+            <div class="linearScale">
+                Never
+                <span class="fillerSpan"> </span>
+                <span> 1 <br> <input type="radio" name="exercises" value="1" required></span>
+                <span> 2 <br> <input type="radio" name="exercises" value="2"></span>
+                <span> 3 <br> <input type="radio" name="exercises" value="3"></span>
+                <span> 4 <br> <input type="radio" name="exercises" value="4"></span>
+                <span> 5 <br> <input type="radio" name="exercises" value="5"></span>
+                <span> 6 <br> <input type="radio" name="exercises" value="6"></span>
+                <span> 7 <br> <input type="radio" name="exercises" value="7"></span>
+                <span> 8 <br> <input type="radio" name="exercises" value="8"></span>
+                <span> 9 <br> <input type="radio" name="exercises" value="9"></span>
+                <span> 10 <br> <input type="radio" name="exercises" value="10"></span>
+                <span class="fillerSpan"> </span>
+                Always
+            </div>
+
+            <br>
+            <div class="formDivider"></div>
+
+            <h2>Relevance <span class="requiredField"> * </span></h2>
+            Did your tutor teach topics that were relevant in your lessons and projects?
+            <br>
+            <br>
+
+            <div class="linearScale">
+                Never
+                <span class="fillerSpan"> </span>
+                <span> 1 <br> <input type="radio" name="relevance" value="1" required></span>
+                <span> 2 <br> <input type="radio" name="relevance" value="2"></span>
+                <span> 3 <br> <input type="radio" name="relevance" value="3"></span>
+                <span> 4 <br> <input type="radio" name="relevance" value="4"></span>
+                <span> 5 <br> <input type="radio" name="relevance" value="5"></span>
+                <span> 6 <br> <input type="radio" name="relevance" value="6"></span>
+                <span> 7 <br> <input type="radio" name="relevance" value="7"></span>
+                <span> 8 <br> <input type="radio" name="relevance" value="8"></span>
+                <span> 9 <br> <input type="radio" name="relevance" value="9"></span>
+                <span> 10 <br> <input type="radio" name="relevance" value="10"></span>
+                <span class="fillerSpan"> </span>
+                Always
+            </div>
+
+            <br>
+            <div class="formDivider"></div>
+
+            <h2>Enthusiasm <span class="requiredField"> * </span></h2>
+            Does your tutor seem interested and eager in teaching you?
+            <br>
+            <br>
+
+            <div class="linearScale">
+                Never
+                <span class="fillerSpan"> </span>
+                <span> 1 <br> <input type="radio" name="enthusiasm" value="1" required></span>
+                <span> 2 <br> <input type="radio" name="enthusiasm" value="2"></span>
+                <span> 3 <br> <input type="radio" name="enthusiasm" value="3"></span>
+                <span> 4 <br> <input type="radio" name="enthusiasm" value="4"></span>
+                <span> 5 <br> <input type="radio" name="enthusiasm" value="5"></span>
+                <span> 6 <br> <input type="radio" name="enthusiasm" value="6"></span>
+                <span> 7 <br> <input type="radio" name="enthusiasm" value="7"></span>
+                <span> 8 <br> <input type="radio" name="enthusiasm" value="8"></span>
+                <span> 9 <br> <input type="radio" name="enthusiasm" value="9"></span>
+                <span> 10 <br> <input type="radio" name="enthusiasm" value="10"></span>
+                <span class="fillerSpan"> </span>
+                Always
+            </div>
+
+            <br>
+            <div class="formDivider"></div>
+
+            <h2>Openness <span class="requiredField"> * </span></h2>
+            Is your tutor friendly and accomodating?
+            <br>
+            <br>
+
+            <div class="linearScale">
+                Never
+                <span class="fillerSpan"> </span>
+                <span> 1 <br> <input type="radio" name="openness" value="1" required></span>
+                <span> 2 <br> <input type="radio" name="openness" value="2"></span>
+                <span> 3 <br> <input type="radio" name="openness" value="3"></span>
+                <span> 4 <br> <input type="radio" name="openness" value="4"></span>
+                <span> 5 <br> <input type="radio" name="openness" value="5"></span>
+                <span> 6 <br> <input type="radio" name="openness" value="6"></span>
+                <span> 7 <br> <input type="radio" name="openness" value="7"></span>
+                <span> 8 <br> <input type="radio" name="openness" value="8"></span>
+                <span> 9 <br> <input type="radio" name="openness" value="9"></span>
+                <span> 10 <br> <input type="radio" name="openness" value="10"></span>
+                <span class="fillerSpan"> </span>
+                Always
+            </div>
+
+            <br>
+            <div class="formDivider"></div>
+
+            <h2>Confidence <span class="requiredField"> * </span></h2>
+            Did your tutor exhibit confidence regarding the subject matter he/she taught?
+            <br>
+            <br>
+
+            <div class="linearScale">
+                Never
+                <span class="fillerSpan"> </span>
+                <span> 1 <br> <input type="radio" name="confidence" value="1" required></span>
+                <span> 2 <br> <input type="radio" name="confidence" value="2"></span>
+                <span> 3 <br> <input type="radio" name="confidence" value="3"></span>
+                <span> 4 <br> <input type="radio" name="confidence" value="4"></span>
+                <span> 5 <br> <input type="radio" name="confidence" value="5"></span>
+                <span> 6 <br> <input type="radio" name="confidence" value="6"></span>
+                <span> 7 <br> <input type="radio" name="confidence" value="7"></span>
+                <span> 8 <br> <input type="radio" name="confidence" value="8"></span>
+                <span> 9 <br> <input type="radio" name="confidence" value="9"></span>
+                <span> 10 <br> <input type="radio" name="confidence" value="10"></span>
+                <span class="fillerSpan"> </span>
+                Always
+            </div>
+
+            <br>
+            <div class="formDivider"></div>
+
+            <!-- START OF ORIGINAL EVAL3 -->
+
+            <h2>Knowledgable <span class="requiredField"> * </span></h2>
+            Is your tutor knowledgable of the topic?
+            <br>
+            <br>
+
+            <div class="linearScale">
+                Never
+                <span class="fillerSpan"> </span>
+                <span> 1 <br> <input type="radio" name="knowledgable" value="1" required></span>
+                <span> 2 <br> <input type="radio" name="knowledgable" value="2"></span>
+                <span> 3 <br> <input type="radio" name="knowledgable" value="3"></span>
+                <span> 4 <br> <input type="radio" name="knowledgable" value="4"></span>
+                <span> 5 <br> <input type="radio" name="knowledgable" value="5"></span>
+                <span> 6 <br> <input type="radio" name="knowledgable" value="6"></span>
+                <span> 7 <br> <input type="radio" name="knowledgable" value="7"></span>
+                <span> 8 <br> <input type="radio" name="knowledgable" value="8"></span>
+                <span> 9 <br> <input type="radio" name="knowledgable" value="9"></span>
+                <span> 10 <br> <input type="radio" name="knowledgable" value="10"></span>
+                <span class="fillerSpan"> </span>
+                Always
+            </div>
+
+            <br>
+            <div class="formDivider"></div>
+
+            <h2>Voice Modulation <span class="requiredField"> * </span></h2>
+            Is your tutor's voice clear and loud enough?
+            <br>
+            <br>
+
+            <div class="linearScale">
+                Never
+                <span class="fillerSpan"> </span>
+                <span> 1 <br> <input type="radio" name="voiceModulation" value="1" required></span>
+                <span> 2 <br> <input type="radio" name="voiceModulation" value="2"></span>
+                <span> 3 <br> <input type="radio" name="voiceModulation" value="3"></span>
+                <span> 4 <br> <input type="radio" name="voiceModulation" value="4"></span>
+                <span> 5 <br> <input type="radio" name="voiceModulation" value="5"></span>
+                <span> 6 <br> <input type="radio" name="voiceModulation" value="6"></span>
+                <span> 7 <br> <input type="radio" name="voiceModulation" value="7"></span>
+                <span> 8 <br> <input type="radio" name="voiceModulation" value="8"></span>
+                <span> 9 <br> <input type="radio" name="voiceModulation" value="9"></span>
+                <span> 10 <br> <input type="radio" name="voiceModulation" value="10"></span>
+                <span class="fillerSpan"> </span>
+                Always
+            </div>
+
+            <br>
+            <div class="formDivider"></div>
+
+            <h2>Question & Answer <span class="requiredField"> * </span></h2>
+            Is your tutor open to questions and is able to answer them?
+            <br>
+            <br>
+
+            <div class="linearScale">
+                Never
+                <span class="fillerSpan"> </span>
+                <span> 1 <br> <input type="radio" name="qa" value="1" required></span>
+                <span> 2 <br> <input type="radio" name="qa" value="2"></span>
+                <span> 3 <br> <input type="radio" name="qa" value="3"></span>
+                <span> 4 <br> <input type="radio" name="qa" value="4"></span>
+                <span> 5 <br> <input type="radio" name="qa" value="5"></span>
+                <span> 6 <br> <input type="radio" name="qa" value="6"></span>
+                <span> 7 <br> <input type="radio" name="qa" value="7"></span>
+                <span> 8 <br> <input type="radio" name="qa" value="8"></span>
+                <span> 9 <br> <input type="radio" name="qa" value="9"></span>
+                <span> 10 <br> <input type="radio" name="qa" value="10"></span>
+                <span class="fillerSpan"> </span>
+                Always
+            </div>
+
+            <br>
+            <div class="formDivider"></div>
+
+            <h2>Effectiveness <span class="requiredField"> * </span></h2>
+            Is your tutor's method of teaching effective in your learning?
+            <br>
+            <br>
+
+            <div class="linearScale">
+                Never
+                <span class="fillerSpan"> </span>
+                <span> 1 <br> <input type="radio" name="effectiveness" value="1" required></span>
+                <span> 2 <br> <input type="radio" name="effectiveness" value="2"></span>
+                <span> 3 <br> <input type="radio" name="effectiveness" value="3"></span>
+                <span> 4 <br> <input type="radio" name="effectiveness" value="4"></span>
+                <span> 5 <br> <input type="radio" name="effectiveness" value="5"></span>
+                <span> 6 <br> <input type="radio" name="effectiveness" value="6"></span>
+                <span> 7 <br> <input type="radio" name="effectiveness" value="7"></span>
+                <span> 8 <br> <input type="radio" name="effectiveness" value="8"></span>
+                <span> 9 <br> <input type="radio" name="effectiveness" value="9"></span>
+                <span> 10 <br> <input type="radio" name="effectiveness" value="10"></span>
+                <span class="fillerSpan"> </span>
+                Always
+            </div>
+
+            <br>
+            <div class="formDivider"></div>
+
+            <h2>Encouraging <span class="requiredField"> * </span></h2>
+            Did your tutor encourage and motivate you in learning and understanding unclear and hard concepts?
+            <br>
+            <br>
+
+            <div class="linearScale">
+                Never
+                <span class="fillerSpan"> </span>
+                <span> 1 <br> <input type="radio" name="encouraging" value="1" required></span>
+                <span> 2 <br> <input type="radio" name="encouraging" value="2"></span>
+                <span> 3 <br> <input type="radio" name="encouraging" value="3"></span>
+                <span> 4 <br> <input type="radio" name="encouraging" value="4"></span>
+                <span> 5 <br> <input type="radio" name="encouraging" value="5"></span>
+                <span> 6 <br> <input type="radio" name="encouraging" value="6"></span>
+                <span> 7 <br> <input type="radio" name="encouraging" value="7"></span>
+                <span> 8 <br> <input type="radio" name="encouraging" value="8"></span>
+                <span> 9 <br> <input type="radio" name="encouraging" value="9"></span>
+                <span> 10 <br> <input type="radio" name="encouraging" value="10"></span>
+                <span class="fillerSpan"> </span>
+                Always
+            </div>
+
+            <br>
+            <div class="formDivider"></div>
+
+            <h2>Comments & Suggestions</h2>
+            What comments or suggestions do you have for your tutor?
+            <br>
+            <!--<input class="eval3TB" name="comments" type="text">-->
+
+            <textarea form="evalForm" name="comments" required></textarea>
+
+            <h2>Personal Message</h2>
+            Any message you want to give to your tutor?
+            <br>
+            <!--<input class="eval3TB" name="message" type="text">-->
+
+            <textarea form="evalForm" name="message" required></textarea>
+
+            <br>
+            <br>
+
+            <!-- SUBMIT BUTTON -->
+            <center>
+                <button class="BTN">Submit</button>
+            </center>
+
+        </form>
+
+    </div>
+
+    <footer>
+        <br>
+        <br>
+        <div style="display:flex; margin-bottom:10px; justify-content: center">
+            <img src="../images/footer-facebook.png"/ style="height:20px; width: 20px;">
+            <span style="width:10px;"></span>
+            <img src="../images/footer-twitter.png"/ style="height:20px; width: 20px;">
+        </div>
+    </footer>
+
+</body>
+
+</html>

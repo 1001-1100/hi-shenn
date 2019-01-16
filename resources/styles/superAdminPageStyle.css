@@ -1,0 +1,396 @@
+body{
+    padding: 0;
+    margin: 0;
+}
+
+ul.adminToolbar {
+    list-style-type: none;
+    margin: 0 auto;
+    padding: 0;
+    border-radius:5px;
+    display: flex;
+    width:90%;
+}
+
+.adminItem{
+    margin:0;
+    margin-top:7%;
+    /* ian stuff here */
+    display:flex;
+    justify-content: center;
+    flex-grow: 1;
+    flex-direction:row;
+    padding:10px 20px;
+    height:20px;
+    transition-property:all;
+    transition-duration:.3s;
+    transition-timing-function: ease;
+    border:1px solid  #112136;
+    color: #112136;
+    border-left:none;
+}
+
+.adminItem:first-of-type {
+    border-left:1px solid  #112136;
+}
+
+.adminItem:hover{
+    background-color:  #112136;
+    cursor: pointer;
+    color:white;
+}
+
+.adminItemActive{
+    background-color:  #112136;
+    color:white;
+}
+/*end of left nav bar*/
+
+/*admin data*/
+
+.dataContainer{
+    height: auto;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.specificDataContainer{
+    width: 55% !important;
+    height: 600px !important;
+    border-radius: 4px;
+    overflow-wrap: break-word;
+    margin-left:2%;
+    margin-top:2%;
+    background:#ebebeb;
+    line-height: 20px;
+    padding-left:15px;
+    padding-right:15px;
+    overflow-y: scroll;
+}
+
+.specificData{
+    display: none;
+
+    margin-bottom: 2%;
+}
+
+.dataHider{
+    position:absolute;
+    top:50%;
+}
+
+.dataHider h3{
+    color:#1a3355;
+    font-size:2em;
+    margin:0;
+    padding:5px;
+}
+
+.dataHider h4{
+    font-weight: normal!important;
+    color:#3b3b3b;
+    margin:0;
+    padding:5px;
+
+}
+
+.demoteAdminButton, .demoteTutorButton{
+    display: none;
+    background-color: red;
+    width: 150px;
+}
+
+.demoteAdminButton:hover, .demoteTutorButton:hover{
+    background-color: #ad0000;
+}
+
+.promoteButton{
+    display:none;
+    background-color: green;
+    width: 150px;
+}
+
+.promoteTuteeBtn{
+    background-color: green;
+    width: 150px;
+}
+
+.promoteButton:hover, .promoteTuteeBtn:hover{
+    background-color: #006200;
+}
+
+.toggleActiveBtn{
+    width: 170px !important;
+}
+
+.demoteTutorForm, .demoteAdminForm, .promoteTutorForm, .toggleActiveTuteeForm, .toggleActiveTutorForm, .promoteTuteeForm{
+    margin: 0;
+    padding: 0;
+    padding-bottom: 5px;
+}
+
+.toggleActiveTutorForm, .toggleActiveTuteeForm, .promoteTutorForm{
+    padding-right: 5px;
+}
+
+.btnContainer{
+    display: flex;
+    flex-direction: row;
+}
+.specificAnnouncementImg{
+    width: 90%;
+    height: 420px;
+    padding: 15px;
+    padding-left: 0;
+}
+
+.toolContainer{
+    width:100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.tableDiv{
+    width:45%;
+}
+
+.newAnnouncementDiv{
+    min-width: 25%;
+    padding-top: 80px;
+    padding-left: 25px;
+    padding-right: 10%;
+}
+
+.newAnnouncementContainer{
+    height: auto;
+    width: 400px;
+    margin: 0;
+    padding: 0;
+
+    padding: 20px;
+    border: 1px solid #c9c9c9;
+    border-radius: 5px;
+}
+
+.deleteAnnouncementForm{
+    margin:0;
+    padding:0;
+}
+.deleteAnnouncementButton{
+    background-color: red !important;
+    margin: 0;
+}
+
+.deleteAnnouncementButton:hover{
+    background-color: #ad0000 !important;
+}
+
+div.sTableContainer{
+    overflow-y: scroll;
+    height:400px;
+    display:block;
+    width:100%;
+    margin-bottom:20px;
+}
+
+table.subjectsTable{
+    border-collapse: collapse;
+    width:100%;
+}
+
+th{
+    background-color:#112136;
+    color:white;
+    border:1px solid #112136;
+    padding:5px;
+}
+
+td{
+    border:1px solid #112136;
+    padding:5px;
+}
+
+.subjectsTable tr:hover{
+    background-color: #eaeaea;
+}
+
+
+.tutorRow:hover, .tuteeRow:hover, .requestRow:hover, .evaluationRow:hover, .feedbackRow:hover, .announcementRow:hover, .tutorAppRow:hover{
+    cursor: pointer;
+    background-color: #eaeaea;
+}
+/*end of admin data*/
+
+/* schedule stuff */
+.schedule{
+    padding: 0;
+    margin-bottom:5%;
+}
+
+.scheduleTitle{
+    margin-bottom: 0px;
+}
+
+.tableTime{
+    position: relative;
+    width: 130px;
+    padding: 0;
+    margin: 0;
+    top:7px;
+}
+
+.tableDates{
+    position: relative;
+    width: 55px;
+    left: 120px;
+    float: left;
+}
+
+.tableCell{
+    position: relative;
+    width: 55px;
+    height: 40px;
+    left: 110px;
+    top:-25px;
+    margin: 0;
+    margin-bottom: -25px;
+    float: left;
+    background-color:white;
+    border: 1px solid #2d4b72;
+}
+
+.blueBg{
+    background-color: #3c6aa7;
+}
+
+.contentContainer{
+    top: 0px;
+}
+
+
+/* START OF MODAL */
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    /*width: 80%;  Could be more or less, depending on screen size */
+
+    /*height: 180px;*/
+    width: 700px;
+    font-size: 16px;
+    color: #2d4b72;
+    text-align: center;
+
+    border-radius: 15px;
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+/* END OF MODAL */
+
+
+
+/* IANS STUFF FOR TOGGLES*/
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    margin-left:20px;
+    margin-top:15px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color:  #3d8bf4;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px  #3d8bf4;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+/* END OF TOGGLE SHIT */
+
+.summaryCard h1{
+    margin-top:0;
+    margin-bottom:0;
+}
+.summaryCard{
+    padding:15px 20px 0px 20px;
+    border:1px solid #c9c9c9;
+    margin-top:15px;
+    border-radius: 5px;
+    text-align: center;
+}

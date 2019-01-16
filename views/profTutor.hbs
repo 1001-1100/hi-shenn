@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!--<link rel="stylesheet" type="text/css" href="../semantic/semantic.css">-->
+        <!--commented out muna since nagugulo niya yung nav bar huhu-->
+        <link rel="stylesheet" href="../styles/navBarStyle.css">
+        <link rel="stylesheet" href="../styles/profTutorStyle.css">
+        
+        <link rel="icon" href="<!-- insert pts small logo here -->">
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        
+        <script src="../otherJS/jquery-3.3.1.min.js"></script>
+        <script src="../semantic/semantic.min.js"></script>
+        <script src="../otherJS/jquery-ui.min.js"></script>
+        <script src="../otherJS/jquery.form.min.js"></script>
+        <script src="../checkers/editProfileChecker.js"></script>
+
+
+        <script>
+            /* JQUERY COMMANDS HERE */
+            $(document).ready(function(){
+
+
+                var toEdit = false;
+
+                var myArray = [];
+
+                var scheduleArray = $("#tSchedule").val().split(",")
+
+                var allCells = $('.tableCell');
+
+
+                for (var i = 0; i < scheduleArray.length; i++) {
+
+                    allCells.each(function (index) {
+                        if ($(this).attr('data-id') === scheduleArray[i]) {
+                            // var flag = $(this).hasClass("blueBg")
+                            $(this).addClass("blueBg")
+                            // alert(scheduleArray[i])
+                        }
+                    });
+                }
+
+                var error = $("#error").val();
+
+                if (error !== ""){
+                    alert(error)
+                    var modal = document.getElementById('passwordModal');
+                    modal.style.display = "block";
+                    $("div#passErr").css("display", "block")
+
+                }
+
+            });
+        </script>
+        
+        <title>Peer Tutors Society</title>
+        <script>
+        $(document).ready(function () {
+            $("li.profileNav").addClass("active")
+        })
+    </script>
+    </head>
+    
+    <body>
+        {{> navbar}}
+
+        <h1 class = pageHeader id="title">MY PROFILE</h1> <!-- change to edit profile on click -->
+        
+        <div class = contentContainer>
+            
+            <br>
+            
+            <div class = studentProfile>
+                <div class = photo style="margin-top:3px">
+                    <img id=profIcon src="../images/defaultIcon - tutor.png"/>
+                </div>
+                
+                <br>
+                
+                <div class = fillerDiv> </div>
+                
+                <div class = info>
+                    <div class = fieldss>
+                        <b>
+                            <div class="fields1">NAME</div>
+                            <div class="fields1">ID NUMBER</div>
+                            <div class="fields1">EMAIL</div>
+                            <div class="fields1">CONTACT NUMBER</div>
+                            <div class="fields1">PASSWORD</div>
+                        </b>
+                    </div>
+                    
+                    <div class = fillerDiv> </div>
+
+                    <form id="editProfile" action="../tutor/editContactNumber" method="post">
+
+                        <div class="fieldsGroup fieldss">
+
+                            <input type="text" class="fields2" id="tName" name="tName" value="{{user.name}}" disabled>
+                            <br>
+                            <input type="text" class="fields2" id="tID" name="tID" value="{{user.idNum}}" disabled>
+                            <br>
+                            <input type="text" class="fields2" id="tEmail" name="tEmail" value="{{user.email}}" disabled>
+                            <br>
+                            <input type="text" class="fields2" id="tContact" name="tContact" value="{{user.contactNum}}" maxlength="11" disabled>
+                            <br>
+                            <input type="password" class="fields2" id="tPass" name="tPass" value="*********" disabled>
+                            <br>
+
+                            <input type="hidden" class="fields" id="tSchedule" name="tSchedule" value="{{user.freeTime}}" disabled>
+
+                            <input type="hidden" id="error" name="error" value="{{error}}">
+
+                        </div>
+
+                    </form>
+
+                    <div class="editIcons">
+                        <div class="fields1">
+                        </div>
+                        <div class="fields1">
+                        </div>
+                        <div class="fields1">
+                        </div>
+                        <div class="fields1">
+                            <img class = "editIcon contactEdit" src="../images/editIcon.png" />
+                        </div>
+                        <div class="fields1">
+                            <img class = "editIcon passwordEdit" src="../images/editIcon.png"/>
+                        </div>
+
+
+                    </div>
+                                                                
+                </div>
+                
+                <br>
+                
+            </div>
+            
+            {{#unless user.superAdmin}}
+                <div class = schedule>
+                    <!--<div class= "applicationContainer">-->
+
+                    <br>
+
+                    <p class= "tutorAppTitle" id="freeTime">YOUR FREE TIME</p> <!-- change to highlight your free time on click -->
+
+                    <br>
+
+                    <div class = "tableDiv">
+                        <p class="tableDates">Mon</p>         <!-- days -->
+                        <p class="tableDates" style="left:158px;">Tues</p>
+                        <p class="tableDates" style="left:151px;">Wed</p>
+                        <p class="tableDates" style="left:139px;">Thurs</p>
+                        <p class="tableDates" style="left:143px;">Fri</p>
+                        <p class="tableDates" style="left:131px;">Sat</p>
+
+                        <p class="tableTime">7:30 - 9:00 </p> <!-- first row -->
+                        <div class ="tableCell" data-id="MO0730"></div>
+                        <div class ="tableCell" data-id="TU0730"></div>
+                        <div class ="tableCell" data-id="WE0730"></div>
+                        <div class ="tableCell" data-id="TH0730"></div>
+                        <div class ="tableCell" data-id="FR0730"></div>
+                        <div class ="tableCell" data-id="SA0730"></div>
+
+                        <p class="tableTime">9:15 - 10:45 </p> <!-- second row -->
+                        <div class ="tableCell" data-id="MO0915"></div>
+                        <div class ="tableCell" data-id="TU0915"></div>
+                        <div class ="tableCell" data-id="WE0915"></div>
+                        <div class ="tableCell" data-id="TH0915"></div>
+                        <div class ="tableCell" data-id="FR0915"></div>
+                        <div class ="tableCell" data-id="SA0915"></div>
+
+                        <p class="tableTime">11:00 - 12:30</p> <!-- third row -->
+                        <div class ="tableCell" data-id="MO1100"></div>
+                        <div class ="tableCell" data-id="TU1100"></div>
+                        <div class ="tableCell" data-id="WE1100"></div>
+                        <div class ="tableCell" data-id="TH1100"></div>
+                        <div class ="tableCell" data-id="FR1100"></div>
+                        <div class ="tableCell" data-id="SA1100"></div>
+
+                        <p class="tableTime">12:45 - 2:15 </p> <!-- fourth row -->
+                        <div class ="tableCell" data-id="MO1245"></div>
+                        <div class ="tableCell" data-id="TU1245"></div>
+                        <div class ="tableCell" data-id="WE1245"></div>
+                        <div class ="tableCell" data-id="TH1245"></div>
+                        <div class ="tableCell" data-id="FR1245"></div>
+                        <div class ="tableCell" data-id="SA1245"></div>
+
+                        <p class="tableTime">2:30 - 4:00 </p> <!-- fifth row -->
+                        <div class ="tableCell" data-id="MO1430"></div>
+                        <div class ="tableCell" data-id="TU1430"></div>
+                        <div class ="tableCell" data-id="WE1430"></div>
+                        <div class ="tableCell" data-id="TH1430"></div>
+                        <div class ="tableCell" data-id="FR1430"></div>
+                        <div class ="tableCell" data-id="SA1430"></div>
+
+                        <p class="tableTime">4:15 - 5:45 </p> <!-- sixth row -->
+                        <div class ="tableCell" data-id="MO1615"></div>
+                        <div class ="tableCell" data-id="TU1615"></div>
+                        <div class ="tableCell" data-id="WE1615"></div>
+                        <div class ="tableCell" data-id="TH1615"></div>
+                        <div class ="tableCell" data-id="FR1615"></div>
+                        <div class ="tableCell" data-id="SA1615"></div>
+
+                        <p class="tableTime">6:00 - 7:30 </p> <!-- seventh row -->
+                        <div class ="tableCell" data-id="MO1800"></div>
+                        <div class ="tableCell" data-id="TU1800"></div>
+                        <div class ="tableCell" data-id="WE1800"></div>
+                        <div class ="tableCell" data-id="TH1800"></div>
+                        <div class ="tableCell" data-id="FR1800"></div>
+                        <div class ="tableCell" data-id="SA1800"></div>
+
+                        <div style="clear:both;"></div>
+
+
+                    </div>
+                    <!--</div>-->
+                </div>
+            {{/unless}}
+            
+
+            <br>
+            
+        </div>
+        
+        <footer>
+            <br>
+            <br>
+            <div style="display:flex; margin-bottom:10px; justify-content: center">
+                <a href="https://www.facebook.com/pts.dlsu/?ref=br_rs" target="_blank" ><img src="../images/footer-facebook.png"/ style="height:20px; width: 20px;"></a>
+                <span style="width:10px;"></span>
+                <a href="https://twitter.com/ptsdlsu" target="_blank" ><img src="../images/footer-twitter.png"/ style="height:20px; width: 20px;"></a>
+            </div>
+        </footer>
+
+        <!-- START OF MODAL -->
+        <div id="passwordModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <!--<span class="close">&times;</span>-->
+                <div class="close closePassword">x</div>
+                <form id="editPassword" method="post" action="../tutor/editPassword">
+
+
+                    <div class="ui pointing label" id="passErr">
+                        <i>Incorrect Password.</i>
+                    </div>
+
+                    <!--<div class="name">Old Password</div>-->
+                    <h2>Old Password</h2>
+                    <input class="textInput" type="password" name="oldPassword">
+
+                    <!--<div class="name">New Password</div>-->
+                    <h2 class="modalHeader">New Password</h2>
+                    <input class="textInput" type="password" name="newPassword">
+
+
+                    <div class="ui pointing label" id="newPassErr">
+                        <i>Minimum of 6 characters with at least one uppercase, one lowercase, and one numerical character.</i>
+                    </div>
+
+                    <!--<div class="name">Confirm Password</div>-->
+                    <h2 class="modalHeader">Confirm Password</h2>
+                    <input class="textInput" type="password" name="confirmPassword">
+
+                    <div class="ui pointing label" id="confirmPassErr">
+                        <i>Passwords must match.</i>
+                    </div>
+
+                </form>
+
+                <button class="BTN" id="submitButtonModal">Okay</button>
+
+            </div>
+
+        </div>
+
+        <!-- END OF MODAL -->
+
+    </body>
+    
+</html>

@@ -1,0 +1,52 @@
+<!--- PARTIAL FOR THE NAVBAR ----->
+<ul class=menuList>
+    <!--FOR ALL NAVBARS-->
+    <a href="/">
+        <img class="ptsLogoTop" src="../images/ptslogowhite.png" />
+    </a>
+
+
+    {{#if user}}
+        <p class="userWelcome">Welcome Back, {{user.name}}</p>
+        <li class="exempt"><a class="logoutBtn" href="/logout">Sign Out</a></li>
+
+        {{#unless user.superAdmin}}
+            <li class="requestNav"><a class="links" href="/tutee/tutorRequest">Request Tutor</a></li>
+            <li class="feedbackNav"><a class="links" href="../feedbackPage">Send Feedback</a></li>
+
+        {{/unless}}
+
+        <!--IF LOGGED IN AS TUTOR-->
+        {{#if user.tutorType}}
+
+            <!--IF ADMIN-->
+            {{#if user.admin}}
+                <li class="adminNav"><a class="links" href="/admin/adminPage">Admin Tools {{#if total}}<div class="notif_circle">
+                    <center><span class="notif"> {{total}} </span></center>
+                </div> {{/if}}</a></li>
+            {{/if}}
+
+            <!---IF SUPER ADMIN--->
+            {{#if user.superAdmin}}
+                <li class="superAdminNav"><a class="links" href="/admin/superAdminPage">Super Admin Tools</a></li>
+            {{/if}}
+
+            <li class="profileNav"><a class="links" href="/tutor/profTutor">My Profile</a></li>
+            <!--IF LOGGED IN AS TUTEE-->
+        {{else}}
+            <li class="applyNav"><a class="links" href="../tutor/applyTutor">Apply as Tutor</a></li>
+            <li class="profileNav"><a class="links" href="../tutee/profStudent">My Profile</a></li>
+        {{/if}}
+
+        {{#if user.superAdmin}}
+        {{else}}
+            <li class="homeNav"><a class="links" href="/">Home</a></li>
+        {{/if}}
+
+        <!--IF NOT LOGGED IN-->
+    {{else}}
+        <li class="exempt"><a class="loginBtn" href="/loginPage">Log In</a></li>
+        <li class="applyNav"><a class="links" href="/tutor/applyTutor">Apply as a Tutor</a></li>
+    {{/if}}
+
+</ul>

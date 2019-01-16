@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../styles/navBarStyle.css">
+    <link rel="stylesheet" href="../styles/feedbackStyle.css">
+    <link rel="icon" href="<!-- insert pts small logo here -->">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <title>Send Feedback</title>
+
+    <!--<link rel="stylesheet" type="text/css" href="semantic/semantic.min.css">-->
+
+    <script src="../otherJS/jquery-3.3.1.js"></script>
+    <script src="../otherJS/jquery-ui.min.js"></script>
+    <script src="../otherJS/jquery.form.min.js"></script>
+
+    <script src="../semantic/semantic.min.js"></script>
+    <script src="../checkers/feedbackChecker.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("li.feedbackNav").addClass("active")
+
+
+
+
+        })
+    </script>
+
+</head>
+
+<body>
+{{> navbar}}
+<h1 class = "pageHeader">Send Feedback</h1>
+<div class="contentContainer">
+    <form autocomplete="off" method="post" action="../feedbackFinish" id="feedbackForm">
+        <h2>Topic of Concern<span class="requiredField"> * </span></h2>
+        <i><p class="description">Name of Tutor? Tutee? Concern with PTS?</p></i>
+
+        <div style="display: flex;">
+            <div>
+                <input type="text" class="textInput" name="concernedTopic" placeholder="Angel Jones" style="width:250px;">
+            </div>
+
+            <div style="width: 15px;"></div>
+
+            <div class="ui pointing label" id="concernedErr">
+                <i>Required Field</i>
+            </div>
+        </div>
+
+        <br>
+
+        <div>
+            <div id="concernedErr2">
+                <i>Please do not leave all fields empty</i>
+            </div>
+            <div>
+                <h2>Complaints / Issues</h2>
+            </div>
+
+            <div style="width: 15px;"></div>
+
+            <div class="ui pointing label" id="complaintsErr">
+                <i>Required Field</i>
+            </div>
+        </div>
+        <i><p class="description">State the situation/s where you felt unsatisfactory with your tutor.</p></i>
+        <textarea form="feedbackForm" name="complaints"></textarea>
+
+        <br><br>
+
+        <h2>Suggestions</h2>
+        <i><p class="description">If you have any suggestion/s towards your tutor regarding anything, leave them here.</p></i>
+        <textarea form="feedbackForm" name="suggestions"></textarea>
+
+        <br><br>
+
+        <h2>Others</h2>
+        <i><p class="description">Drop other concerns here.</p></i>
+        <textarea form="feedbackForm" name="others"></textarea>
+
+        <br>
+        <br>
+
+        <center>
+            <button class="ACCEPT BTN" id="submitButton">Submit</button>
+        </center>
+
+    </form>
+
+</div>
+
+<footer>
+    <br>
+    <br>
+    <div style="display:flex; margin-bottom:10px; justify-content: center">
+        <img src="../images/footer-facebook.png"/ style="height:20px; width: 20px;">
+        <span style="width:10px;"></span>
+        <img src="../images/footer-twitter.png"/ style="height:20px; width: 20px;">
+    </div>
+</footer>
+
+</body>
+
+<div id="sendFeedbackModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p> Are you sure you want to submit this feedback?</p>
+        <span>
+                <button class="ACCEPT BTN" id="yesButtonModal">Yes</button>
+                <button class="REJECT BTN" id="noButtonModal">No</button>
+            </span>
+    </div>
+
+</div>
+
+</html>

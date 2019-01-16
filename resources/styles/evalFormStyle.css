@@ -1,0 +1,49 @@
+body{
+    padding: 0;
+    margin: 0;
+}
+
+/*tutor evaluation form*/
+
+/* change border of textField */
+.textInput{
+    margin-top: 0px;
+    width: 250px;
+}
+
+select{
+    font-size: 16px;
+    color: #2d4b72;
+}
+
+/* the linear scale form */
+.linearScale{
+    text-align: center;
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+/* span to make a tab */
+.fillerSpan{
+    width: 10px;
+}
+
+/* makes radio button bigger */
+input[type=radio] {
+    border: 0px;
+    height: 20px;
+    width: 20px;
+}
+
+/* visible divider for the form questions */
+.formDivider{
+    width: 750px;
+    height: 2px;
+    background-color: #112136;
+}
+
+h2{
+    margin-top: 15px;
+}

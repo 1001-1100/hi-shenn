@@ -1,0 +1,72 @@
+body{
+    padding: 0;
+    margin: 0;
+}
+
+/*.pageHeader{
+    left: auto;
+    margin: auto;
+    text-align: center;
+}*/
+
+.notes{
+    font-style: italic;
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+
+#firstNameErr{
+    display: none;
+    font-size: 15px;
+    margin-top: 38px;
+    color: maroon;
+}
+
+#lastNameErr{
+    display: none;
+    font-size: 15px;
+    margin-top: 38px;
+    color: maroon;
+}
+
+#idNumErr{
+    display: none;
+    font-size: 15px;
+    margin-top: 38px;
+    color: maroon;
+}
+
+#courseErr{
+    display: none;
+    font-size: 15px;
+    margin-top: 38px;
+    color: maroon;
+}
+
+#mobNumErr{
+    display: none;
+    font-size: 15px;
+    margin-top: 38px;
+    color: maroon;
+}
+
+#passErr{
+    display: none;
+    font-size: 15px;
+    margin-top: 15px;
+    color: maroon;
+}
+
+#confirmPassErr{
+    display: none;
+    font-size: 15px;
+    margin-top: 38px;
+    color: maroon;
+}
+
+#emailErr{
+    display: none;
+    font-size: 15px;
+    margin-top: 38px;
+    color: maroon;
+}

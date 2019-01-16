@@ -1,0 +1,107 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../styles/navBarStyle.css">
+    <link rel="stylesheet" href="../styles/superAdminPageStyle.css">
+    <script src="../otherJS/jquery-3.3.1.js"> </script>
+    <script src="../checkers/adminPageChecker.js"> </script>
+    <script src="../checkers/superAdmin.js"> </script>
+    <link rel="icon" href="<!-- insert pts small logo here -->">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <title>Super Admin Page</title>
+    <script>
+        $(document).ready(function () {
+            $("li.superAdminNav").addClass("active")
+        })
+    </script>
+</head>
+
+<body>
+{{> navbar}}
+<nav>
+    <ul class="adminToolbar">
+        <li class="adminItem adminItemActive" data-id="tutorES">Report Generator</li>
+        <li class="adminItem" data-id="subjectsOffered">Subject Utilities</li>
+    </ul>
+</nav>
+
+<div class="content">
+    <div class="dataContainer">
+        <div class="tutorESContainer toolContainer">
+            <div class="summaryCard">
+                <h1>Tutor Evaluation Summary</h1>
+                <form action="../admin/evalSummary" method="POST">
+                    <input class="ACCEPT BTN" type="submit" value="Generate Summary Report" />
+                </form>
+            </div>
+        </div>
+
+        <div class="subjectsOfferedContainer toolContainer" style="display: none">
+            <div class="tableDiv">
+                <h1>Subjects</h1>
+
+                <div class="sTableContainer">
+                    <table class="subjectsTable">
+                    </table>
+                </div>
+            </div>
+
+            
+        </div>
+    </div>
+</div>
+<!--END CONTENT-->
+
+<!-- START OF MODAL -->
+<div id="deleteAnnouncementModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p> Are you sure you want to delete this Announcement? </p>
+        <button class="BTN" id="deleteButtonModal">Yes</button>
+    </div>
+
+</div>
+
+<div id="addAnnouncementModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p> Are you sure you want to add this announcement? </p>
+        <button class="BTN" id="addButtonModal">Yes</button>
+    </div>
+
+</div>
+
+<div id="turnOnModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p> Open Evaluations? </p>
+        <button class="BTN" id="evaluationOpenButtonModal">Yes</button>
+    </div>
+
+</div>
+
+<div id="turnOffModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p> Close Evaluations? </p>
+        <button class="BTN" id="evaluationCloseButtonModal">Yes</button>
+    </div>
+
+</div>
+<!-- END OF MODAL -->
+
+<footer>
+    <br>
+</footer>
+
+</body>
+
+</html>

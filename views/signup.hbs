@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="../styles/navBarStyle.css">
+        <link rel="stylesheet" href="../styles/signupStyle.css">
+        <link rel="icon" href="<!-- insert pts small logo here -->">
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <title>Sign Up</title>
+
+        <script src="../otherJS/jquery-3.3.1.js"></script>
+        <script src="../otherJS/jquery-ui.min.js"></script>
+        <script src="../otherJS/jquery.form.min.js"></script>
+
+
+        <script src="../semantic/semantic.min.js"></script>
+        <script src="../checkers/signupChecker.js"></script>
+
+        <script>
+            $(document).ready(function() {
+
+
+                $(".ui.dropdown").dropdown('get value');
+
+            });
+
+        </script>
+
+        <!--<link rel="stylesheet" type="text/css" href="semantic/semantic.min.css">-->
+
+    </head>
+    
+    <body>
+        {{> navbar}}
+
+        <h1 class = pageHeader>Create your Account</h1>
+
+            <div class = contentContainer>
+
+                <form method="post" action="signUp" id="signup_form" autocomplete="off">
+
+                    <div style="display: flex;">
+                        <div>
+                            <h2> First Name <span class="requiredField"> * </span></h2>
+                            <input type="text" class="textInput" name="firstName" placeholder="John" required>
+                        </div>
+
+                        <div style="width: 15px;"></div>
+
+                        <div class="ui pointing label" id="firstNameErr">
+                            <i>Required Field</i>
+                        </div>
+                    </div> <br>
+
+                    <div style="display: flex;">
+                        <div>
+                            <h2> Last Name <span class="requiredField"> * </span></h2>
+                            <input type="text" class="textInput" name="lastName" placeholder="Dela Cruz" required>
+                        </div>
+
+                        <div style="width: 15px;"></div>
+
+                        <div class="ui pointing label" id="lastNameErr">
+                            <i>Required Field</i>
+                        </div>
+                    </div> <br>
+
+                    <div style="display: flex;">
+                        <div>
+                            <h2> ID Number <span class="requiredField"> * </span></h2>
+                            <input type="text" class="textInput" name="idNumber" maxlength="8" placeholder="11512345" required>
+                        </div>
+
+                        <div style="width: 15px;"></div>
+
+                        <div class="ui pointing label" id="idNumErr" >
+                            <i>Invalid ID Number</i>
+                        </div>
+                    </div> <br>
+
+                    <h2>Campus <span class="requiredField"> * </span></h2>
+                    <div class="notes">
+                        Note: Tutoring for STC students can only take place in DLSU-Manila due to the schedules of our available tutors.
+                    </div>
+                    <input type="radio" name="campus" checked="checked" value="Taft" required/> Taft<br>
+                    <input type="radio" name="campus" value="STC" required/> STC <br>
+                    <br>
+
+                    <div style="display: flex;">
+                        <div>
+                            <h2> Course <span class="requiredField"> * </span></h2>
+                            <input type="text" class="textInput" name="course" placeholder="BS Computer Science" required>
+                        </div>
+
+                        <div style="width: 15px;"></div>
+
+                        <div class="ui pointing label" id="courseErr">
+                            <i>Required Field</i>
+                        </div>
+                    </div> <br>
+
+                    <div style="display: flex;">
+                        <div>
+                            <h2> Mobile Number <span class="requiredField"> * </span></h2>
+                            <input type="text" class="textInput" name="mobNumber" maxlength="11" placeholder="09231234567" required>
+                        </div>
+
+                        <div style="width: 15px;"></div>
+
+                        <div class="ui pointing label" id="mobNumErr">
+                            <i>Invalid Mobile Number</i>
+                        </div>
+                    </div> <br>
+
+                    <div style="display: flex;">
+                        <div>
+                            <h2> DLSU Email <span class="requiredField"> * </span></h2>
+                            <input type="text" class="textInput" name="email" placeholder="john_dela_cruz@dlsu.edu.ph" required>
+                        </div>
+
+                        <div style="width: 15px;"></div>
+
+                        <div class="ui pointing label"  id="emailErr">
+                            <i>Please use DLSU email</i>
+                        </div>
+                    </div> <br>
+
+                    <div style="display: flex;">
+                        <div>
+                            <h2> Password <span class="requiredField"> * </span></h2>
+                            <input type="password" class="textInput" name="password" required>
+                        </div>
+
+                        <div style="width: 15px;"></div>
+
+                        <div class="ui pointing label" id="passErr">
+                            <i>Minimum of 6 characters with at least one uppercase, one lowercase, and one numerical character.</i>
+                        </div>
+                    </div> <br>
+
+                    <div style="display: flex;">
+                        <div>
+                            <h2> Confirm Password <span class="requiredField"> * </span></h2>
+                            <input type="password" class="textInput" name="confirmPassword" required>
+                        </div>
+
+                        <div style="width: 15px;"></div>
+
+                        <div class="ui pointing label" id="confirmPassErr">
+                            <i>Passwords must match.</i>
+                        </div>
+                    </div> <br>
+
+                    <center><button class="BTN" id="signup_button">Sign Up</button></center>
+
+                </form>
+
+            </div> 
+        
+        <footer>
+            <br>
+            <br>
+            <div style="display:flex; margin-bottom:10px; justify-content: center">
+                <img src="../images/footer-facebook.png"/ style="height:20px; width: 20px;">
+                <span style="width:10px;"></span>
+                <img src="../images/footer-twitter.png"/ style="height:20px; width: 20px;">
+            </div>
+        </footer>
+        
+    </body>
+</html>
